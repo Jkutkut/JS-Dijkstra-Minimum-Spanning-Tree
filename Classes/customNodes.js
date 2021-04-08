@@ -1,14 +1,22 @@
-class node {
-    constructor (pos, size) {
+class Node {
+    constructor (pos, index=0, size) {
         this.pos = pos;
+        this.index = index;
         this.size = size;
+        this.sizeHalf = this.size * 0.5;
+
     }
 
-    draw() {
+    show() {
         push();
             translate(this.pos);
-            fill(0);
-            ellipse(this.size);
+            fill(100);
+            ellipse(0, 0, this.size);
+
+            fill(255);
+            // text(this.index, - this.sizeHalf, - this.sizeHalf, this.sizeHalf, this.sizeHalf)
+            let offset = - this.size * 0.1;
+            text(this.index, offset, offset, this.sizeHalf, this.sizeHalf)
         pop();
     }
 }
