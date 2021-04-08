@@ -27,30 +27,7 @@ class Node {
         if (this.mate == null) {
             return
         }
-
-        let arrowTipSize = this.mate.size / 4;
-        let angle = atan2(this.pos.y - this.mate.pos.y, this.pos.x - this.mate.pos.x); //gets the angle of the line
-        let offset = createVector(this.mate.size / 2, 0);
-
-        offset.rotate(angle);
-        push()
-            // if (this.mate.pos.x >= 0) {
-            //     offset.x *= -1;
-            // }
-            // if (this.mate.pos.y >= 0) {
-            //     offset.y *= -1;
-            // }
-            line(this.pos.x, this.pos.y, this.mate.pos.x, this.mate.pos.y)
-        pop()
-        push() //start new drawing state
-            translate(this.mate.pos.x + offset.x, this.mate.pos.y + offset.y); //translates to the destination vertex
-            // rotate(angle - HALF_PI); //rotates the arrow point
-            beginShape();
-                vertex(0, 0);
-                vertex(-arrowTipSize, arrowTipSize * 0.5);
-                vertex(-arrowTipSize, -arrowTipSize * 0.5);
-                vertex(0, 0);
-            endShape();
-        pop();
+        let arr = new Arch(this, this.mate, 1);
+        arr.show();
     }
 }
