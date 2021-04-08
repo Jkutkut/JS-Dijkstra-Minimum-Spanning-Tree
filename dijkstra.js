@@ -4,6 +4,9 @@ function* dijkstra() {
     focusedNode = nodes[0];
     while (true) {
         // search new mates and set them to selected
+        for (let node in focusedNode.getMates()) {
+            selectedNodes.add(node);
+        }
         // search min cost and set that node to valid
         // repeat until no more mates
         yield i++;
