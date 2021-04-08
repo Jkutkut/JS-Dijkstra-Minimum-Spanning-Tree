@@ -1,7 +1,7 @@
-class Node {
-    constructor (pos, index=0, size) {
+class cNode {
+    constructor (pos, id=0, size) {
         this.pos = pos;
-        this.index = index;
+        this.id = id;
         this.size = size;
         this.sizeHalf = this.size * 0.5;
 
@@ -13,13 +13,13 @@ class Node {
     show() {
         push();
             translate(this.pos);
-            fill(54, 235, 255, 100);
+            fill(54, 235, 255, 150);
             ellipse(0, 0, this.size);
 
             fill(0);
-            // text(this.index, - this.sizeHalf, - this.sizeHalf, this.sizeHalf, this.sizeHalf)
+            // text(this.id, - this.sizeHalf, - this.sizeHalf, this.sizeHalf, this.sizeHalf)
             let offset = - this.size * 0.1;
-            text(this.index, offset, offset, this.sizeHalf, this.sizeHalf)
+            text(this.id, offset, offset, this.sizeHalf, this.sizeHalf)
         pop();
     }
 

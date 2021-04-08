@@ -9,8 +9,8 @@ const SHAPE = [
 ];
 
 
-var nodes;
-const NODESIZE = 50;
+var nodes = [];
+var NODESIZE;
 
 
 function setup() {
@@ -22,18 +22,20 @@ function setup() {
         mainCanvasHeight = windowHeight;
     }
 
+    NODESIZE = Math.floor(mainCanvasWidth / 25);
+
     createCanvas(mainCanvasWidth, mainCanvasHeight);
 
 
-    createNodesFromArray(SHAPE);
-
-    createCloseConnections(150);
+    // createNodesFromArray(SHAPE);
+    createRandomNodes(40, NODESIZE * 3);
+    createCloseConnections(NODESIZE * 5);
 }
 
 
 
 function draw() {
-    background(color(255));
+    background(color(240));
     for (let arrow of nodes) {
         arrow.drawConnections();
     }
@@ -44,6 +46,15 @@ function draw() {
 }
 
 
+function clearBoard() {
+    clearConections();
+    clearNodes();
+}
+
+function clearNodes() {
+    nodes = [];
+}
+
 function clearConections() {
     for (let node of nodes) {
         node.resetConnections();
@@ -52,23 +63,40 @@ function clearConections() {
 
 // create nodes:
 
-// function createRandomNodes(N, R) {
-//     for (let i = 0; i < N; i++) {
-//         validNode = false;
-//         while (!validNode) {
-//             let pos = createVector(
+function createRandomNodes(N, R) {
+    let MAXATTEMPS = 1000;
+    let attempt, pos, node;
+    let index = 0;
 
-//             );
-//             let node = new Node()
-//         }
-//     }
-// }
+    for (let i = 0; i < N; i++) {
+        validNode = false;
+        attempt = 0;
+        while (!validNode && attempt++ < MAXATTEMPS) {
+            validNode = true;
+            pos = createVector(
+                Math.floor(Math.random() * (mainCanvasWidth - NODESIZE * 2)) + NODESIZE,
+                Math.floor(Math.random() * (mainCanvasHeight - NODESIZE * 2)) + NODESIZE
+            );
+            node = new cNode(pos, index, NODESIZE);
+            for (let otherNode of nodes) {
+                if (otherNode.dist(node) <= R) {
+                    validNode = false;
+                    break;
+                }
+            }
+        }
+        if (validNode) {
+            nodes.push(node);
+            index++;
+        }
+    }
+}
 
 function createNodesFromArray(arr) {
     let center = createVector(mainCanvasWidth / 2, mainCanvasHeight / 2);
 
     nodes = [];
-    nodes.push(new Node(center, 0, NODESIZE));
+    nodes.push(new cNode(center, 0, NODESIZE));
     let angle, pos;
     let index = 1;
     let ite = 0;
@@ -80,7 +108,7 @@ function createNodesFromArray(arr) {
 
             pos.add(center);
 
-            let nod = new Node(pos, index++, NODESIZE);
+            let nod = new cNode(pos, index++, NODESIZE);
             nodes.push(nod);
         }
         ite++;
@@ -94,7 +122,9 @@ function createRandomConnections(multiplicator=0.1) {
         let len = getRandomIndex(multiplicator);
         console.log(len);
         for (let i = 0; i < len + 1; i++) {
-            index = getRandomIndex();
+            do {
+                index = getRandomIndex();
+            } while (nodes[index] == node)
             node.addConnection(nodes[index]);
         }
     }
