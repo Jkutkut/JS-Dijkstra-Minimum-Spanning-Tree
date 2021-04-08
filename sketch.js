@@ -30,6 +30,8 @@ function setup() {
     // createNodesFromArray(SHAPE);
     createRandomNodes(40, NODESIZE * 3);
     createCloseConnections(NODESIZE * 5);
+
+    nodes[0].phase = cNode.PHASE.VALID;
 }
 
 

@@ -1,11 +1,18 @@
 class cNode {
+    static PHASE = {
+        NORMAL: 0,
+        SELECTED: 1,
+        VALID: 2
+    }
     static PHASES = [
         "NORMAL",
-        "SELECTED"
+        "SELECTED",
+        "VALID"
     ];
     static COLORS = {
-        NORMAL: [54, 235, 255, 120],
-        SELECTED: [22, 222, 149, 100]
+        NORMAL: [54, 235, 255, 180],
+        SELECTED: [252, 164, 40],
+        VALID: [22, 242, 140, 250]
     };
 
     constructor (pos, id=0, size) {
@@ -32,6 +39,13 @@ class cNode {
             
             text(this.id, this.textOffset, this.textOffset, this.sizeHalf, this.sizeHalf)
         pop();
+    }
+
+    drawConnections() {
+        // this code is to make the arrow point
+        for (let arrow of this.connections) {
+            arrow.show();
+        }
     }
 
     // GETTERS AND SETTERS
@@ -65,12 +79,5 @@ class cNode {
     resetConnections() {
         this.nodesConnected = new Set();
         this.connections = new Set();
-    }
-
-    drawConnections() {
-        // this code is to make the arrow point
-        for (let arrow of this.connections) {
-            arrow.show();
-        }
     }
 }
