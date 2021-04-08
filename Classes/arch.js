@@ -4,5 +4,8 @@ class Arch {
         this.destination = destination;
         this.cost = cost;
     }
-    
+
+    show() {
+        
+    }
 }
