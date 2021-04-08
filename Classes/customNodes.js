@@ -5,8 +5,8 @@ class Node {
         this.size = size;
         this.sizeHalf = this.size * 0.5;
 
-        this.mate = null;
-
+        // this.mate = null;
+        this.connections = new Set();
     }
 
     show() {
@@ -22,12 +22,14 @@ class Node {
         pop();
     }
 
+    addConnection(destination, cost) {
+        this.connections.add(new Arch(this, destination, cost));
+    }
+
     drawConnections() {
         // this code is to make the arrow point
-        if (this.mate == null) {
-            return
+        for (let arrow of this.connections) {
+            arrow.show();
         }
-        let arr = new Arch(this, this.mate, 1);
-        arr.show();
     }
 }

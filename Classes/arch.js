@@ -7,7 +7,7 @@ class Arch {
 
     show() {
         let arrowTipSize = this.destination.size / 4;
-        let angle = atan2(this.origin.y - this.destination.pos.y, this.origin.x - this.destination.pos.x); //gets the angle of the line
+        let angle = atan2(this.origin.pos.y - this.destination.pos.y, this.origin.pos.x - this.destination.pos.x); //gets the angle of the line
         let offset = createVector(this.destination.size / 2, 0);
 
         offset.rotate(angle);
@@ -18,7 +18,7 @@ class Arch {
             // if (this.destination.pos.y >= 0) {
             //     offset.y *= -1;
             // }
-            line(this.origin.x, this.origin.y, this.destination.pos.x, this.destination.pos.y)
+            line(this.origin.pos.x, this.origin.pos.y, this.destination.pos.x, this.destination.pos.y)
         pop()
         push() //start new drawing state
             translate(this.destination.pos.x + offset.x, this.destination.pos.y + offset.y); //translates to the destination vertex

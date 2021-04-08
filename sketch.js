@@ -31,7 +31,7 @@ function setup() {
     nodes = [];
 
     nodes.push(new Node(center, 0, NODESIZE));
-    nodes[0].mate = (new Node(createVector(100, 0).add(center), -1, NODESIZE));
+    nodes[0].addConnection(new Node(createVector(100, 0).add(center), -1, NODESIZE));
 
 
     // let deltaTheta = 2 * Math.PI / ELEM;
@@ -47,7 +47,6 @@ function setup() {
             pos.add(center);
 
             nodes.push(new Node(pos, index++, NODESIZE))
-            console.log("node created")
         }
     }
 
