@@ -7,8 +7,7 @@ class Node {
 }
 
 // Binary Search tree class
-class BinarySearchTree
-{
+class BinarySearchTree {
 	constructor() {
 		this.root = null; // root of a binary seach tree
 	}
@@ -104,6 +103,28 @@ class BinarySearchTree
 	// Helper function
 
     /**
+     * finds the max depth of the tree (longest branch)
+     */
+    findDepth(node=null, currentDepth=0) {
+        if (node == null && currentDepth == 0) {
+            node = this.getRootNode();
+        }
+        else if (node == null) {
+            return 0;
+        }
+
+        if (node.left == null && node.right == null) {
+            return currentDepth;
+        }
+        else {
+            return Math.max(
+                this.findDepth(node.left, currentDepth + 1),
+                this.findDepth(node.right, currentDepth + 1)
+            )
+        }
+    }
+
+    /**
      * finds the minimum node in tree searching starts from given node
      * */ 
     findMinNode(node) {
@@ -122,6 +143,8 @@ class BinarySearchTree
         return this.root;
     }
 
+
+
     /**
      * Performs inorder traversal of a tree
      * */
@@ -132,7 +155,6 @@ class BinarySearchTree
             this.inorder(node.right);
         }
     }
-
 
 	/**
      * Performs preorder traversal of a tree
@@ -172,6 +194,11 @@ class BinarySearchTree
         else { // if data is equal to the node data return node
             return node;
         }
+    }
+
+
+    print() {
+        console.log(this.findDepth())
     }
 }
 
@@ -263,5 +290,30 @@ function test() {
 
 
 if (!module.parent) {
-    test();
+    // create an object for the BinarySearchTree
+    var BST = new BinarySearchTree();
+
+    // Inserting nodes to the BinarySearchTree
+    BST.insert(15);
+    BST.insert(25);
+    BST.insert(10);
+    BST.insert(7);
+    BST.insert(22);
+    BST.insert(17);
+    BST.insert(13);
+    BST.insert(5);
+    BST.insert(9);
+    BST.insert(27);
+                            
+    //		 15
+    //		 / \
+    //	 10 25
+    //	 / \ / \
+    //	 7 13 22 27
+    //	 / \ /
+    // 5 9 17
+
+    // test();
+
+    BST.print();
 }
