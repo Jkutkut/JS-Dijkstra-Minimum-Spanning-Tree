@@ -17,7 +17,6 @@ class cNode {
             ellipse(0, 0, this.size);
 
             fill(0);
-            // text(this.id, - this.sizeHalf, - this.sizeHalf, this.sizeHalf, this.sizeHalf)
             let offset = - this.size * 0.1;
             text(this.id, offset, offset, this.sizeHalf, this.sizeHalf)
         pop();

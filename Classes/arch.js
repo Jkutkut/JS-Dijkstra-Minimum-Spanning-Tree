@@ -29,6 +29,12 @@ class Arch {
             push();
                 rotate(this.angle - PI);
                 translate(this.distancia);
+                push();
+                    translate(this.distancia.copy().mult(-0.45).x, 10);
+                    rotate(PI * 0.5);
+                    text(Math.floor(this.distancia.x / 10), 0, 0)
+                pop();
+                // translate(this.distanciaMedios);
                 beginShape();
                     vertex(0, 0);
                     vertex(-this.arrowTipSize, this.arrowTipSize * 0.5);

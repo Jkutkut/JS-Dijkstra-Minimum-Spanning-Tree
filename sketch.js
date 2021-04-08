@@ -135,7 +135,7 @@ function getRandomIndex(multiplicator = 1) {
 }
 
 
-function createCloseConnections(maxDistance, multiplicator=1) {
+function createCloseConnections(maxDistance) {
     for (let node of nodes) {
         for (let mateNode of nodes) {
             if (mateNode == node) {
