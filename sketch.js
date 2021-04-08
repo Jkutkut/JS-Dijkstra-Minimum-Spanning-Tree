@@ -3,9 +3,9 @@ const ELEM = 12;
 const R = 200;
 
 const SHAPE = [
-    {R: 100, ELEM: 6},
-    {R: 200, ELEM: 3},
-    {R: 300, ELEM: 12}
+    {R: 100, ELEM: 3},
+    {R: 200, ELEM: 6},
+    {R: 300, ELEM: 6}
 ]
 
 
@@ -34,11 +34,13 @@ function setup() {
 
     // let deltaTheta = 2 * Math.PI / ELEM;
     let angle, pos;
-    let index = 0;
+    let index = 1;
+
+    let ite = 0;
 
     for (let lvl of SHAPE) {
         for (let deltaTheta = 0; deltaTheta < Math.PI * 2; deltaTheta += 2 * Math.PI / lvl.ELEM) {
-            angle = 0 + deltaTheta;
+            angle = (ite * PI / 11) + deltaTheta;
 
             pos = createVector(lvl.R * Math.cos(angle), lvl.R * Math.sin(angle));
 
@@ -49,6 +51,7 @@ function setup() {
 
             nodes[0].addConnection(nod);
         }
+        ite++;
     }
 
 

@@ -6,6 +6,7 @@ class Node {
         this.sizeHalf = this.size * 0.5;
 
         // this.mate = null;
+        this.nodesConnected = new Set();
         this.connections = new Set();
     }
 
@@ -23,7 +24,12 @@ class Node {
     }
 
     addConnection(destination, cost) {
+        if (this.nodesConnected.has(destination)) {
+            console.log("already in");
+            return
+        }
         this.connections.add(new Arch(this, destination, cost));
+        this.nodesConnected.add(destination)
     }
 
     drawConnections() {
