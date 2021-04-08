@@ -258,6 +258,33 @@ class BinarySearchTree {
 
     //     let extension;
     // }
+
+    printBinaryTree(node, space, height) {
+        if (node == null) {
+            return;
+        }
+        space += height;
+        this.printBinaryTree(node.right, space, height);
+        console.log();
+
+        let str2print = "";
+        for (let i = height; i < space; i++) {
+            str2print += " ";
+        }
+
+
+        let nodeName;
+        if (typeof node.data == 'number'){
+            nodeName = "" + node.data;
+        }
+        else {
+            nodeName = node.data.toString();
+        }
+
+        str2print += nodeName;
+        console.log(str2print);
+        this.printBinaryTree(node.left, space, height);
+    }
 }
 
 
@@ -423,4 +450,5 @@ if (!module.parent) {
 
     // BST.print();
     console.log(BST.recursivePrint());
+    BST.printBinaryTree(BST.getRootNode(), 0, 10);
 }
