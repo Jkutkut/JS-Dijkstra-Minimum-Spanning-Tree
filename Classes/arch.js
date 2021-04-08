@@ -3,31 +3,25 @@ class Arch {
         this.origin = origin;
         this.destination = destination;
         this.cost = cost;
+
+        this.distancia = createVector(this.origin.pos.copy().dist(this.destination.pos) - this.destination.size * 0.5);
+        this.angle = atan2(this.origin.pos.y - this.destination.pos.y, this.origin.pos.x - this.destination.pos.x); //gets the angle of the line
+
+        this.arrowTipSize = this.destination.size / 4;
     }
 
     show() {
-        let arrowTipSize = this.destination.size / 4;
-        let angle = atan2(this.origin.pos.y - this.destination.pos.y, this.origin.pos.x - this.destination.pos.x); //gets the angle of the line
-        let offset = createVector(this.destination.size / 2, 0);
-
-        offset.rotate(angle);
-        push()
-            // if (this.destination.pos.x >= 0) {
-            //     offset.x *= -1;
-            // }
-            // if (this.destination.pos.y >= 0) {
-            //     offset.y *= -1;
-            // }
+        push();
             line(this.origin.pos.x, this.origin.pos.y, this.destination.pos.x, this.destination.pos.y)
-        pop()
-        push() //start new drawing state
-            translate(this.destination.pos.x + offset.x, this.destination.pos.y + offset.y); //translates to the destination vertex
+            translate(this.origin.pos.x, this.origin.pos.y); //translates to the destination vertex
             push();
-                // rotate(angle);
+                rotate(this.angle);
+                translate(this.distancia);
+                // console.log(this.distancia)
                 beginShape();
                     vertex(0, 0);
-                    vertex(-arrowTipSize, arrowTipSize * 0.5);
-                    vertex(-arrowTipSize, -arrowTipSize * 0.5);
+                    vertex(-this.arrowTipSize, this.arrowTipSize * 0.5);
+                    vertex(-this.arrowTipSize, -this.arrowTipSize * 0.5);
                     vertex(0, 0);
                 endShape();
             pop();

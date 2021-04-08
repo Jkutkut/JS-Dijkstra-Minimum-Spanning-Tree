@@ -31,8 +31,6 @@ function setup() {
     nodes = [];
 
     nodes.push(new Node(center, 0, NODESIZE));
-    nodes[0].addConnection(new Node(createVector(100, 0).add(center), -1, NODESIZE));
-
 
     // let deltaTheta = 2 * Math.PI / ELEM;
     let angle, pos;
@@ -46,7 +44,10 @@ function setup() {
 
             pos.add(center);
 
-            nodes.push(new Node(pos, index++, NODESIZE))
+            let nod = new Node(pos, index++, NODESIZE);
+            nodes.push(nod)
+
+            nodes[0].addConnection(nod);
         }
     }
 

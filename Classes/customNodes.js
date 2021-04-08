@@ -12,7 +12,7 @@ class Node {
     show() {
         push();
             translate(this.pos);
-            fill(100);
+            fill(100, 100, 100, 100);
             ellipse(0, 0, this.size);
 
             fill(255);
