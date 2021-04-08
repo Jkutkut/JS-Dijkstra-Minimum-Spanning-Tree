@@ -6,7 +6,6 @@ const SHAPE = [
     {R: 100, ELEM: 6},
     {R: 200, ELEM: 3},
     {R: 300, ELEM: 12}
-
 ]
 
 
@@ -29,10 +28,10 @@ function setup() {
     let center = createVector(mainCanvasWidth / 2, mainCanvasHeight / 2);
 
 
-
     nodes = [];
 
     nodes.push(new Node(center, 0, NODESIZE));
+    nodes[0].mate = (new Node(createVector(100, 0).add(center), -1, NODESIZE));
 
 
     // let deltaTheta = 2 * Math.PI / ELEM;
@@ -59,7 +58,9 @@ function setup() {
 
 function draw() {
     background(color(200));
-
+    for (let arrow of nodes) {
+        arrow.drawConnections();
+    }
     for (let node of nodes) {
         node.show();
     }
