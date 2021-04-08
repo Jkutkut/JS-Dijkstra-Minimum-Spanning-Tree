@@ -23,6 +23,11 @@ class Node {
         pop();
     }
 
+    // GETTERS AND SETTERS
+    dist(mateNode) {
+        return this.pos.dist(mateNode.pos);
+    }
+
     addConnection(destination, cost) {
         if (this.nodesConnected.has(destination)) {
             console.warn("already in");
