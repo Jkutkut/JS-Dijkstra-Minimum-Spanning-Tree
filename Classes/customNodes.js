@@ -44,9 +44,13 @@ class Node {
         pop()
         push() //start new drawing state
             translate(this.mate.pos.x + offset.x, this.mate.pos.y + offset.y); //translates to the destination vertex
-            rotate(angle - HALF_PI); //rotates the arrow point
-            triangle(- arrowTipSize * 1.5, 0, arrowTipSize * 1.5, arrowTipSize, 0, -arrowTipSize / 2); //draws the arrow point as a triangle
-            // triangle(- arrowTipSize * 0.5, arrowTipSize, arrowTipSize * 0.5, arrowTipSize, 0, -arrowTipSize / 2); //draws the arrow point as a triangle
+            // rotate(angle - HALF_PI); //rotates the arrow point
+            beginShape();
+                vertex(0, 0);
+                vertex(-arrowTipSize, arrowTipSize * 0.5);
+                vertex(-arrowTipSize, -arrowTipSize * 0.5);
+                vertex(0, 0);
+            endShape();
         pop();
     }
 }
