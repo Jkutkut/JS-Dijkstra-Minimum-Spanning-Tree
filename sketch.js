@@ -6,7 +6,7 @@ const SHAPE = [
     {R: 100, ELEM: 6},
     {R: 200, ELEM: 6},
     {R: 300, ELEM: 6}
-]
+];
 
 
 var nodes;
@@ -25,34 +25,7 @@ function setup() {
     createCanvas(mainCanvasWidth, mainCanvasHeight);
 
 
-    let center = createVector(mainCanvasWidth / 2, mainCanvasHeight / 2);
-
-
-    nodes = [];
-
-    nodes.push(new Node(center, 0, NODESIZE));
-
-    // let deltaTheta = 2 * Math.PI / ELEM;
-    let angle, pos;
-    let index = 1;
-
-    let ite = 0;
-
-    for (let lvl of SHAPE) {
-        for (let deltaTheta = 0; Math.PI * 2 - deltaTheta >= 0.01; deltaTheta += 2 * Math.PI / lvl.ELEM) {
-            angle = (ite * PI / 11) + deltaTheta;
-
-            pos = createVector(lvl.R * Math.cos(angle), lvl.R * Math.sin(angle));
-
-            pos.add(center);
-
-            let nod = new Node(pos, index++, NODESIZE);
-            nodes.push(nod)
-
-            // nodes[0].addConnection(nod);
-        }
-        ite++;
-    }
+    createNodesFromArray(SHAPE);
 
     createCloseConnections(150);
 }
@@ -60,7 +33,7 @@ function setup() {
 
 
 function draw() {
-    background(color(200));
+    background(color(255));
     for (let arrow of nodes) {
         arrow.drawConnections();
     }
@@ -77,6 +50,42 @@ function clearConections() {
     }
 }
 
+// create nodes:
+
+// function createRandomNodes(N, R) {
+//     for (let i = 0; i < N; i++) {
+//         validNode = false;
+//         while (!validNode) {
+//             let pos = createVector(
+
+//             );
+//             let node = new Node()
+//         }
+//     }
+// }
+
+function createNodesFromArray(arr) {
+    let center = createVector(mainCanvasWidth / 2, mainCanvasHeight / 2);
+
+    nodes = [];
+    nodes.push(new Node(center, 0, NODESIZE));
+    let angle, pos;
+    let index = 1;
+    let ite = 0;
+    for (let lvl of arr) {
+        for (let deltaTheta = 0; Math.PI * 2 - deltaTheta >= 0.01; deltaTheta += 2 * Math.PI / lvl.ELEM) {
+            angle = (ite * PI / 11) + deltaTheta;
+
+            pos = createVector(lvl.R * Math.cos(angle), lvl.R * Math.sin(angle));
+
+            pos.add(center);
+
+            let nod = new Node(pos, index++, NODESIZE);
+            nodes.push(nod);
+        }
+        ite++;
+    }
+}
 
 // create connections:
 

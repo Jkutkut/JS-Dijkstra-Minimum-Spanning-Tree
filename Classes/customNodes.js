@@ -13,10 +13,10 @@ class Node {
     show() {
         push();
             translate(this.pos);
-            fill(100, 100, 100, 100);
+            fill(54, 235, 255, 100);
             ellipse(0, 0, this.size);
 
-            fill(255);
+            fill(0);
             // text(this.index, - this.sizeHalf, - this.sizeHalf, this.sizeHalf, this.sizeHalf)
             let offset = - this.size * 0.1;
             text(this.index, offset, offset, this.sizeHalf, this.sizeHalf)
