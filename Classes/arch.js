@@ -9,9 +9,7 @@ class Arch {
 
         this.arrowTipSize = this.destination.size / 4;
 
-        // let offset = this.origin.pos.copy().sub(this.destination.pos).heading();
-        let offsetV = createVector(1, 0);
-        offsetV.rotate(this.angle);
+        let offsetV = createVector(1, 0).rotate(this.angle);
         this.lineOffset = {
             start: offsetV.copy().mult(this.origin.size * 0.5),
             end: offsetV.copy().mult(this.destination.size * 0.5)
@@ -20,6 +18,7 @@ class Arch {
 
     show() {
         push();
+            fill(0)
             line(
                 this.origin.pos.x - this.lineOffset.start.x,
                 this.origin.pos.y - this.lineOffset.start.y,
@@ -30,7 +29,6 @@ class Arch {
             push();
                 rotate(this.angle - PI);
                 translate(this.distancia);
-                // console.log(this.distancia)
                 beginShape();
                     vertex(0, 0);
                     vertex(-this.arrowTipSize, this.arrowTipSize * 0.5);
