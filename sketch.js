@@ -46,28 +46,12 @@ function draw() {
 }
 
 
-function clearBoard() {
-    clearConections();
-    clearNodes();
-}
-
-function clearNodes() {
-    nodes = [];
-}
-
-function clearConections() {
-    for (let node of nodes) {
-        node.resetConnections();
-    }
-}
-
 // create nodes:
 
 function createRandomNodes(N, R) {
     let MAXATTEMPS = 1000;
     let attempt, pos, node;
     let index = 0;
-
     for (let i = 0; i < N; i++) {
         validNode = false;
         attempt = 0;
@@ -94,9 +78,7 @@ function createRandomNodes(N, R) {
 
 function createNodesFromArray(arr) {
     let center = createVector(mainCanvasWidth / 2, mainCanvasHeight / 2);
-
-    nodes = [];
-    nodes.push(new cNode(center, 0, NODESIZE));
+    nodes = [new cNode(center, 0, NODESIZE)];
     let angle, pos;
     let index = 1;
     let ite = 0;
@@ -134,7 +116,6 @@ function getRandomIndex(multiplicator = 1) {
     return Math.floor(Math.random() * nodes.length * multiplicator)
 }
 
-
 function createCloseConnections(maxDistance) {
     for (let node of nodes) {
         for (let mateNode of nodes) {
@@ -145,5 +126,22 @@ function createCloseConnections(maxDistance) {
                 node.addConnection(mateNode)
             }
         }
+    }
+}
+
+// clear functions:
+
+function clearBoard() {
+    clearConections();
+    clearNodes();
+}
+
+function clearNodes() {
+    nodes = [];
+}
+
+function clearConections() {
+    for (let node of nodes) {
+        node.resetConnections();
     }
 }
