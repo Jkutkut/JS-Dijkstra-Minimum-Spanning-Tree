@@ -1,11 +1,23 @@
 class cNode {
+    static PHASES = [
+        "NORMAL",
+        "SELECTED"
+    ];
+    static COLORS = {
+        NORMAL: [54, 235, 255, 120],
+        SELECTED: [22, 222, 149, 100]
+    };
+
     constructor (pos, id=0, size) {
         this.pos = pos;
         this.id = id;
+        this.phase = 0;
+
         this.size = size;
         this.sizeHalf = this.size * 0.5;
+        this.textOffset = - this.size * 0.1;
 
-        // this.mate = null;
+        // connections
         this.nodesConnected = new Set();
         this.connections = new Set();
     }
@@ -13,12 +25,12 @@ class cNode {
     show() {
         push();
             translate(this.pos);
-            fill(54, 235, 255, 150);
+            fill(...this.color);
             ellipse(0, 0, this.size);
 
             fill(0);
-            let offset = - this.size * 0.1;
-            text(this.id, offset, offset, this.sizeHalf, this.sizeHalf)
+            
+            text(this.id, this.textOffset, this.textOffset, this.sizeHalf, this.sizeHalf)
         pop();
     }
 
@@ -26,6 +38,16 @@ class cNode {
     dist(mateNode) {
         return this.pos.dist(mateNode.pos);
     }
+
+    get color() {
+        return this.constructor.COLORS[this.phaseName];
+    }
+
+    get phaseName() {
+        return this.constructor.PHASES[this.phase];
+    }
+
+
 
     addConnection(destination, cost) {
         if (this.nodesConnected.has(destination)) {
