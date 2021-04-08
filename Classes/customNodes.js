@@ -25,7 +25,11 @@ class Node {
 
     addConnection(destination, cost) {
         if (this.nodesConnected.has(destination)) {
-            console.log("already in");
+            console.warn("already in");
+            return
+        }
+        if (this == destination) {
+            console.warn("same node as destination")
             return
         }
         this.connections.add(new Arch(this, destination, cost));

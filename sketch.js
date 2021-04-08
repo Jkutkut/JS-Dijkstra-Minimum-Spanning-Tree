@@ -49,9 +49,21 @@ function setup() {
             let nod = new Node(pos, index++, NODESIZE);
             nodes.push(nod)
 
-            nodes[0].addConnection(nod);
+            // nodes[0].addConnection(nod);
         }
         ite++;
+    }
+
+    let getRandomIndex = function (multiplicator=1) {
+        return Math.floor(Math.random() * nodes.length * multiplicator)
+    }
+    for (let node of nodes) {
+        let len = getRandomIndex(0.1);
+        console.log(len);
+        for (let i = 0; i < len + 1; i++) {
+            index = getRandomIndex();
+            node.addConnection(nodes[index]);
+        }
     }
 
 
