@@ -3,7 +3,7 @@ const ELEM = 12;
 const R = 200;
 
 const SHAPE = [
-    {R: 100, ELEM: 3},
+    {R: 100, ELEM: 6},
     {R: 200, ELEM: 6},
     {R: 300, ELEM: 6}
 ]
@@ -80,4 +80,11 @@ function draw() {
         node.show();
     }
 
+}
+
+
+function clearConections() {
+    for (let node of nodes) {
+        node.resetConnections();
+    }
 }

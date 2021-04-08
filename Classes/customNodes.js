@@ -36,6 +36,11 @@ class Node {
         this.nodesConnected.add(destination)
     }
 
+    resetConnections() {
+        this.nodesConnected = new Set();
+        this.connections = new Set();
+    }
+
     drawConnections() {
         // this code is to make the arrow point
         for (let arrow of this.connections) {
