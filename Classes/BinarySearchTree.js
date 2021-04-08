@@ -9,10 +9,8 @@ class Node {
 // Binary Search tree class
 class BinarySearchTree
 {
-	constructor()
-	{
-		// root of a binary seach tree
-		this.root = null;
+	constructor() {
+		this.root = null; // root of a binary seach tree
 	}
 
 	// function to be implemented
@@ -20,49 +18,35 @@ class BinarySearchTree
      * Helper method which creates a new node to be inserted and calls insertNode 
      * */ 
     insert(data) {
-        // Creating a node and initailising
-        // with data
-        var newNode = new Node(data);
-                        
-        // root is null then node will be added to the tree and made root.
-        if(this.root === null)
+        var newNode = new Node(data); // Creating a node and initailising with data
+        if(this.root === null) { // root is null then node will be added to the tree and made root.
             this.root = newNode;
-        else
-            // find the correct position in the tree and add the node
+        }
+        else { // find the correct position in the tree and add the node
             this.insertNode(this.root, newNode);
+        }
     }
 
     /**
      * Method to insert a node in a tree. It moves over the tree to find the location. To insert a node with a given data
      * */
-    insertNode(node, newNode)
-    {
-        // if the data is less than the node
-        // data move left of the tree
-        if(newNode.data < node.data)
-        {
-            // if left is null insert node here
-            if(node.left === null)
+    insertNode(node, newNode) {
+        if(newNode.data < node.data) { // if the data is less than the node data move left of the tree
+            if(node.left === null) { // if left is null insert node here
                 node.left = newNode;
-            else
-
-                // if left is not null recur until
-                // null is found
+            }
+            else { // if left is not null recur until null is found
                 this.insertNode(node.left, newNode);
+            }
         }
 
-        // if the data is more than the node
-        // data move right of the tree
-        else
-        {
-            // if right is null insert node here
-            if(node.right === null)
+        else { // if the data is more than the node data move right of the tree
+            if(node.right === null) { // if right is null insert node here
                 node.right = newNode;
-            else
-
-                // if right is not null recur until
-                // null is found
+            }
+            else { // if right is not null recur until null is found
                 this.insertNode(node.right,newNode);
+            }
         }
     }
 
@@ -70,8 +54,7 @@ class BinarySearchTree
      * Helper method that calls the removeNode with a given data
      */
     remove(data) {
-        // root is re-initialized with
-        // root of a modified tree.
+        // root is re-initialized with root of a modified tree.
         this.root = this.removeNode(this.root, data);
     }
 
@@ -80,51 +63,34 @@ class BinarySearchTree
      * Method to remove node with a given data. It recur over the tree to find the data and removes it
      */
     removeNode(node, key) {
-        // if the root is null then tree is empty
-        if(node === null)
+        if(node === null) { // if the root is null then tree is empty
             return null;
-
-        // if data to be delete is less than roots data then move to left subtree
-        else if(key < node.data)
-        {
+        }
+        else if(key < node.data) { // if data to be delete is less than roots data then move to left subtree
             node.left = this.removeNode(node.left, key);
             return node;
         }
-
-        // if data to be delete is greater than roots data then move to right subtree
-        else if(key > node.data)
-        {
+        else if(key > node.data) { // if data to be delete is greater than roots data then move to right subtree
             node.right = this.removeNode(node.right, key);
             return node;
         }
-
-        // if data is similar to the root's data
-        // then delete this node
-        else
-        {
-            // deleting node with no children
-            if(node.left === null && node.right === null)
-            {
+        else { // if data is similar to the root's data then delete this node
+            if(node.left === null && node.right === null) { // deleting node with no children
                 node = null;
                 return node;
             }
 
-            // deleting node with one children
-            if(node.left === null)
-            {
+            if(node.left === null) { // deleting node with one children
                 node = node.right;
                 return node;
             }
-            
-            else if(node.right === null)
-            {
+            else if(node.right === null) {
                 node = node.left;
                 return node;
             }
 
             // Deleting node with two children
-            // minumum node of the rigt subtree
-            // is stored in aux
+            // minumum node of the rigt subtree is stored in aux
             var aux = this.findMinNode(node.right);
             node.data = aux.data;
 
@@ -134,32 +100,27 @@ class BinarySearchTree
 
     }
 
-				
 
 	// Helper function
-	
 
     /**
      * finds the minimum node in tree searching starts from given node
-     *  */ 
-    findMinNode(node)
-    {
-        // if left of a node is null
-        // then it must be minimum node
-        if(node.left === null)
+     * */ 
+    findMinNode(node) {
+        if(node.left === null) { // if left of a node is null then it must be minimum node
             return node;
-        else
+        }
+        else {
             return this.findMinNode(node.left);
+        }
     }
 
 	/**
      * returns root of the tree
-     *  */ 
+     * */ 
     getRootNode() {
         return this.root;
     }
-
-	
 
     /**
      * Performs inorder traversal of a tree
@@ -177,8 +138,7 @@ class BinarySearchTree
      * Performs preorder traversal of a tree
      *  */	
     preorder(node) {
-        if(node !== null)
-        {
+        if(node !== null) {
             console.log(node.data);
             this.preorder(node.left);
             this.preorder(node.right);
@@ -189,8 +149,7 @@ class BinarySearchTree
      * Performs postorder traversal of a tree
      *  */
     postorder(node) {
-        if(node !== null)
-        {
+        if(node !== null) {
             this.postorder(node.left);
             this.postorder(node.right);
             console.log(node.data);
@@ -199,28 +158,21 @@ class BinarySearchTree
 
 	/**
      * search for a node with given data
-     *  */
+     * */
     search(node, data) {
-        // if trees is empty return null
-        if(node === null)
+        if(node === null) { // if trees is empty return null
             return null;
-
-        // if data is less than node's data
-        // move left
-        else if(data < node.data)
+        }
+        else if(data < node.data) { // if data is less than node's data move left
             return this.search(node.left, data);
-
-        // if data is less than node's data
-        // move left
-        else if(data > node.data)
+        }
+        else if(data > node.data) { // if data is less than node's data move left
             return this.search(node.right, data);
-
-        // if data is equal to the node data
-        // return node
-        else
+        }
+        else { // if data is equal to the node data return node
             return node;
+        }
     }
-
 }
 
 
