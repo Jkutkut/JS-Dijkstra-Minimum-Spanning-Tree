@@ -4,7 +4,7 @@ class cNode {
         SELECTED: 1,
         VALID: 2
     }
-    static PHASES = [
+    static PHASESNAMES = [
         "NORMAL",
         "SELECTED",
         "VALID"
@@ -53,6 +53,46 @@ class cNode {
     }
 
     // GETTERS AND SETTERS
+
+    // id
+    get id() {
+        return this.IDvalue;
+    }
+    set id(newID) {
+        this.IDvalue = newID;
+    } 
+
+    // position
+    get pos() {
+        return this.position;
+    }
+    set pos(newPos) {
+        if (!newPos instanceof p5.Vector) {
+            throw new Error("The new position must be a p5.Vector");
+        }
+        this.position = newPos;
+    }
+
+    // phase
+    get phase() {
+        return this.currentPhase;
+    }
+    set phase(newPhase) {
+        if (Number.isInteger(newPhase) && (newPhase > 0 && newPhase < this.PHASES.length)){
+            throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
+        }
+        this.currentPhase = newPhase;
+    }
+    get phaseName() {
+        return this.constructor.PHASESNAMES[this.phase];
+    }
+
+    // physical
+    /**
+     * Returns current distance in pixels to the selected node
+     * @param {cNode} mateNode desired node
+     * @returns Distance in pixels to the selected node
+     */
     dist(mateNode) {
         return this.pos.dist(mateNode.pos);
     }
@@ -61,13 +101,7 @@ class cNode {
         return this.constructor.COLORS[this.phaseName];
     }
 
-    get phaseName() {
-        return this.constructor.PHASES[this.phase];
-    }
 
-    set newPhase(newP) {
-        this.phase = newP;
-    }
 
     get getMates() {
         // return this.nodesConnected;

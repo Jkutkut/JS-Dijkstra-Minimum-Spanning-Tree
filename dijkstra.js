@@ -4,7 +4,7 @@ function* dijkstra() {
     priorityQueue = new Set();
     focusedNode = nodes[0];
     focusedNode.defineCost = 0;
-    focusedNode.newPhase = cNode.PHASE.VALID;
+    focusedNode.phase = cNode.PHASE.VALID;
     yield focusedNode;
     while (true) {
         // search new mates and set them to selected
