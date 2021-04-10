@@ -54,18 +54,34 @@ class cNode {
 
     // GETTERS AND SETTERS
 
-    // id
+    // ID
+    /**
+     * Returns the node current ID
+     * @returns {any} Current ID
+     */
     get id() {
         return this.IDvalue;
     }
+    /**
+     * Overwrites the current ID of the node. This ID is just visual, so any ID is valid.
+     * @param newID {any} New ID
+     */
     set id(newID) {
         this.IDvalue = newID;
     } 
 
     // position
+    /**
+     * @returns {p5.Vector} Current position of the node as a p5.Vector.
+     */
     get pos() {
         return this.position;
     }
+    /**
+     * Changes the position of the node
+     * @param newPos {p5.Vector} New desired position
+     * @throws Error if the input is not a valid p5.Vector
+     */
     set pos(newPos) {
         if (!newPos instanceof p5.Vector) {
             throw new Error("The new position must be a p5.Vector");
@@ -89,7 +105,7 @@ class cNode {
 
     // physical
     /**
-     * Returns current distance in pixels to the selected node
+     * Returns current distance in pixels to the selected node.
      * @param {cNode} mateNode desired node
      * @returns Distance in pixels to the selected node
      */
@@ -97,6 +113,9 @@ class cNode {
         return this.pos.dist(mateNode.pos);
     }
 
+    /**
+     * Returns the current color of the node based on it's phase property.
+     */
     get color() {
         return this.constructor.COLORS[this.phaseName];
     }
