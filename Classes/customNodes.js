@@ -27,6 +27,10 @@ class cNode {
         // connections
         this.nodesConnected = new Set();
         this.connections = new Set();
+
+        //Dijkstra:
+        this.costToRoot = null;
+        this.wayToRoot = null;
     }
 
     show() {
@@ -61,9 +65,43 @@ class cNode {
         return this.constructor.PHASES[this.phase];
     }
 
+    set newPhase(newP) {
+        this.phase = newP;
+    }
 
+    get getMates() {
+        return this.nodesConnected;
+    }
 
-    addConnection(destination, cost) {
+    connectedToNode(node) {
+        return this.nodesConnected.has(node);
+    }
+
+    set defineCost(c) {
+        this.costToRoot = c;
+    }
+
+    setCost(originNode, extraCost) {
+        this.costToRoot = originNode.cost + extraCost;
+        this.wayToRoot = originNode;
+    }
+
+    costToNode(nodeToFind) {
+        if (!this.connectedToNode(nodeToFind)) {
+            console.log("Not found");
+            return null;
+        }
+
+        for (let a of this.connections) {
+            if (a.aimsToNode(nodeToFind)) {
+                return a.cost;
+            }
+        }
+        return Infinity;
+
+    }
+
+    addConnection(destination) {
         if (this.nodesConnected.has(destination)) {
             console.warn("already in");
             return
@@ -72,7 +110,7 @@ class cNode {
             console.warn("same node as destination")
             return
         }
-        this.connections.add(new Arch(this, destination, cost));
+        this.connections.add(new Arch(this, destination));
         this.nodesConnected.add(destination)
     }
 

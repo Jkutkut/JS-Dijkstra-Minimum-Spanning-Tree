@@ -1,4 +1,4 @@
-class Node {
+class BSTNode {
     constructor(data) {
         this.data = data;
         this.left = null;
@@ -17,7 +17,7 @@ class BinarySearchTree {
      * Helper method which creates a new node to be inserted and calls insertNode 
      * */ 
     insert(data) {
-        var newNode = new Node(data); // Creating a node and initailising with data
+        var newNode = new BSTNode(data); // Creating a node and initailising with data
         if(this.root === null) { // root is null then node will be added to the tree and made root.
             this.root = newNode;
         }
@@ -30,7 +30,8 @@ class BinarySearchTree {
      * Method to insert a node in a tree. It moves over the tree to find the location. To insert a node with a given data
      * */
     insertNode(node, newNode) {
-        if(newNode.data < node.data) { // if the data is less than the node data move left of the tree
+        // if(newNode.data < node.data) { // if the data is less than the node data move left of the tree
+        if (newNode.compareTo(data) == -1) {
             if(node.left === null) { // if left is null insert node here
                 node.left = newNode;
             }
@@ -65,11 +66,13 @@ class BinarySearchTree {
         if(node === null) { // if the root is null then tree is empty
             return null;
         }
-        else if(key < node.data) { // if data to be delete is less than roots data then move to left subtree
+        // else if(key < node.data) { // if data to be delete is less than roots data then move to left subtree
+        else if(node.compareTo(key) == 1) { // if data to be delete is less than roots data then move to left subtree
             node.left = this.removeNode(node.left, key);
             return node;
         }
-        else if(key > node.data) { // if data to be delete is greater than roots data then move to right subtree
+        // else if(key > node.data) { // if data to be delete is greater than roots data then move to right subtree
+        else if(node.compareTo(key) == -1) { // if data to be delete is greater than roots data then move to right subtree
             node.right = this.removeNode(node.right, key);
             return node;
         }
@@ -288,7 +291,7 @@ class BinarySearchTree {
 }
 
 
-function test() {
+function testBinarySearchTree() {
     // create an object for the BinarySearchTree
     var BST = new BinarySearchTree();
 

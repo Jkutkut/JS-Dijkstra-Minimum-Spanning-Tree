@@ -12,6 +12,8 @@ const SHAPE = [
 var nodes = [];
 var NODESIZE;
 
+var djkIterator = dijkstra(); // iterator with the logic of the algo
+
 
 function setup() {
     mainCanvasWidth = windowWidth;
@@ -30,8 +32,6 @@ function setup() {
     // createNodesFromArray(SHAPE);
     createRandomNodes(40, NODESIZE * 3);
     createCloseConnections(NODESIZE * 5);
-
-    nodes[0].phase = cNode.PHASE.VALID;
 }
 
 
