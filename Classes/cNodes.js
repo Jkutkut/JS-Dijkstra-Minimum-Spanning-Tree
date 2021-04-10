@@ -105,6 +105,7 @@ class CustomNode {
             throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
         }
         this.currentPhase = newPhase;
+        this.show();
     }
     get phaseName() {
         return CustomNode.PHASESNAMES[this.phase];

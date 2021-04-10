@@ -48,7 +48,7 @@ function draw() {
     for (let node of nodes) {
         node.show();
     }
-
+    noLoop();
 }
 
 function keyPressed(event) {

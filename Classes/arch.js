@@ -75,6 +75,7 @@ class Arch {
 
     set state(newState) {
         this.currentState = newState;
+        this.show();
     }
     get state() {
         return this.currentState;
