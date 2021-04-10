@@ -15,6 +15,14 @@ function* dijkstra() {
         }
         yield priorityQueue.size;
         // search min cost and set that node to valid
+        // let minCost = Infinity;
+        // let bestNode = null;
+        // for (let node of priorityQueue) {
+        //     if (node.costToRoot < minCost) {
+        //         bestNode = node;
+        //         minCost = bestNode.costToRoot;
+        //     }
+        // }
         // repeat until no more mates
         yield i++;
     }

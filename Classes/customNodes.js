@@ -70,7 +70,14 @@ class cNode {
     }
 
     get getMates() {
-        return this.nodesConnected;
+        // return this.nodesConnected;
+        let mates = new Set();
+        for (let node of this.nodesConnected) {
+            if (node.phase == cNode.PHASE.NORMAL) {
+                mates.add(node);
+            }
+        }
+        return mates;
     }
 
     connectedToNode(node) {
