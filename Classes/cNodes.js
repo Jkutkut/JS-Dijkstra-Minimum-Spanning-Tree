@@ -90,9 +90,17 @@ class cNode {
     }
 
     // phase
+    /**
+     * Gets the current phase of the node
+     */
     get phase() {
         return this.currentPhase;
     }
+    /**
+     * Changes the phases of the node
+     * @param newPhase {number} int value of the desired phase
+     * @throws Error if phase not valid
+     */
     set phase(newPhase) {
         if (Number.isInteger(newPhase) && (newPhase > 0 && newPhase < this.PHASES.length)){
             throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
