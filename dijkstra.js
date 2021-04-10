@@ -28,7 +28,9 @@ function* dijkstra() {
                 minCost = bestNode.cost;
             }
         }
+        bestNode.nodeToRoot = focusedNode;
         focusedNode = bestNode;
+        
 
         // repeat until no more mates
         // yield i++;

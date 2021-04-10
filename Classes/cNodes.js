@@ -165,12 +165,17 @@ class CustomNode {
             node = this.nodeToRoot;
         }
 
+        if (!this.connectedToNode(node)) {
+            return
+        }
+
         for(let a of this.connections) {
             if (a.aimsToNode(node)) {
                 a.state = Arch.STATES.VALID;
                 return
             }
         }
+        throw new Error("error");
     }
 
 
@@ -224,10 +229,13 @@ class cNode extends CustomNode {
     }
 
     set phase(newPhase) {
-        cNode.prototype.phase.call(newPhase);
-        if (newPhase = cNode.PHASE.VALID) {
+        super.phase = newPhase;
+        if (newPhase == cNode.PHASE.VALID) {
             this.validateArch();
-            this.nodeToRoot.validateArch();
+            this.nodeToRoot.validateArch(this);
         }
+    }
+    get phase() {
+        return super.phase;
     }
 }

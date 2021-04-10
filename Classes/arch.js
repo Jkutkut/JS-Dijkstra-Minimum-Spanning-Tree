@@ -35,12 +35,15 @@ class Arch {
     show() {
         push();
             fill(...this.color);
-            line(
-                this.origin.pos.x - this.lineOffset.start.x,
-                this.origin.pos.y - this.lineOffset.start.y,
-                this.destination.pos.x + this.lineOffset.end.x,
-                this.destination.pos.y + this.lineOffset.end.y
-            )
+            push()
+                stroke(...this.color);
+                line(
+                    this.origin.pos.x - this.lineOffset.start.x,
+                    this.origin.pos.y - this.lineOffset.start.y,
+                    this.destination.pos.x + this.lineOffset.end.x,
+                    this.destination.pos.y + this.lineOffset.end.y
+                )
+            pop()
             translate(this.origin.pos.x, this.origin.pos.y); //translates to the destination vertex
             push();
                 rotate(this.angle - PI);
@@ -51,7 +54,7 @@ class Arch {
                     rotate(PI * 0.5);
                     text(this.cost, 0, 0)
                 pop();
-                // translate(this.distanciaMedios);
+                stroke(...this.color);
                 beginShape();
                     vertex(0, 0);
                     vertex(-this.arrowTipSize, this.arrowTipSize * 0.5);
