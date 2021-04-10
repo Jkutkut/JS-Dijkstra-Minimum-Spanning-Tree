@@ -29,8 +29,8 @@ class cNode {
         this.connections = new Set();
 
         //Dijkstra:
-        this.costToRoot = null;
-        this.wayToRoot = null;
+        this.costToRoot = Infinity;
+        this.wayToRoot = undefined;
     }
 
     show() {
@@ -102,7 +102,7 @@ class cNode {
      * @throws Error if phase not valid
      */
     set phase(newPhase) {
-        if (Number.isInteger(newPhase) && (newPhase > 0 && newPhase < this.PHASES.length)){
+        if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < cNode.PHASESNAMES.length)){
             throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
         }
         this.currentPhase = newPhase;
@@ -110,6 +110,22 @@ class cNode {
     get phaseName() {
         return this.constructor.PHASESNAMES[this.phase];
     }
+
+    set cost(c) {
+        this.costToRoot = c;
+    }
+    get cost() {
+        return this.costToRoot;
+    }
+
+    set wayToRoot(node) {
+        this.nodeToRoot = node;
+    }
+    get wayToRoot() {
+        return this.nodeToRoot;
+    }
+
+
 
     // physical
     /**
@@ -145,12 +161,11 @@ class cNode {
         return this.nodesConnected.has(node);
     }
 
-    set defineCost(c) {
-        this.costToRoot = c;
-    }
-
     setCost(originNode, extraCost) {
-        this.costToRoot = originNode.cost + extraCost;
+        let newCost = originNode.cost + extraCost;
+        if (newCost < this.costToRoot){
+            this.costToRoot = newCost;
+        }
         this.wayToRoot = originNode;
     }
 

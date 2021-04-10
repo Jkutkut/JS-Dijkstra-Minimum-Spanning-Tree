@@ -11,7 +11,7 @@ function* dijkstra() {
         for (let node of focusedNode.getMates) {
             priorityQueue.add(node);
             node.setCost(focusedNode, focusedNode.costToNode(node));
-            node.newPhase = cNode.PHASE.SELECTED;
+            node.phase = cNode.PHASE.SELECTED;
         }
         yield priorityQueue.size;
         // search min cost and set that node to valid
