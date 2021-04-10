@@ -29,7 +29,6 @@ class cNode {
         this.connections = new Set();
 
         //Dijkstra:
-        this.costToRoot = Infinity;
         this.wayToRoot = undefined;
     }
 
@@ -111,62 +110,9 @@ class cNode {
         return this.constructor.PHASESNAMES[this.phase];
     }
 
-    set cost(c) {
-        this.costToRoot = c;
-    }
+    // cost
     get cost() {
-        return this.costToRoot;
-    }
-
-    set wayToRoot(node) {
-        this.nodeToRoot = node;
-    }
-    get wayToRoot() {
-        return this.nodeToRoot;
-    }
-
-
-
-    // physical
-    /**
-     * Returns current distance in pixels to the selected node.
-     * @param {cNode} mateNode desired node
-     * @returns Distance in pixels to the selected node
-     */
-    dist(mateNode) {
-        return this.pos.dist(mateNode.pos);
-    }
-
-    /**
-     * Returns the current color of the node based on it's phase property.
-     */
-    get color() {
-        return this.constructor.COLORS[this.phaseName];
-    }
-
-
-
-    get getMates() {
-        // return this.nodesConnected;
-        let mates = new Set();
-        for (let node of this.nodesConnected) {
-            if (node.phase == cNode.PHASE.NORMAL) {
-                mates.add(node);
-            }
-        }
-        return mates;
-    }
-
-    connectedToNode(node) {
-        return this.nodesConnected.has(node);
-    }
-
-    setCost(originNode, extraCost) {
-        let newCost = originNode.cost + extraCost;
-        if (newCost < this.costToRoot){
-            this.costToRoot = newCost;
-        }
-        this.wayToRoot = originNode;
+        return this.nodeToRoot.costToNode(this);
     }
 
     costToNode(nodeToFind) {
@@ -177,11 +123,54 @@ class cNode {
 
         for (let a of this.connections) {
             if (a.aimsToNode(nodeToFind)) {
-                return a.cost;
+                return this.cost + a.cost;
             }
         }
-        return Infinity;
+        throw Error("Node connected but cost not found!");
+    }
 
+    // node
+    set nodeToRoot(node) {
+        this.wayToRoot = node;
+    }
+    get nodeToRoot() {
+        return this.wayToRoot;
+    }
+
+
+
+    // physical
+    /**
+     * Returns the current color of the node based on it's phase property.
+     */
+     get color() {
+        return this.constructor.COLORS[this.phaseName];
+    }
+
+    /**
+     * Returns current distance in pixels to the selected node.
+     * @param {cNode} mateNode desired node
+     * @returns Distance in pixels to the selected node
+     */
+    dist(mateNode) {
+        return this.pos.dist(mateNode.pos);
+    }
+
+
+
+    get getMates() {
+        // return this.nodesConnected;
+        let mates = new Set();
+        for (let node of this.nodesConnected) {
+            if (node.phase != cNode.PHASE.VALID) {
+                mates.add(node);
+            }
+        }
+        return mates;
+    }
+
+    connectedToNode(node) {
+        return this.nodesConnected.has(node);
     }
 
     addConnection(destination) {
@@ -200,5 +189,15 @@ class cNode {
     resetConnections() {
         this.nodesConnected = new Set();
         this.connections = new Set();
+    }
+}
+
+class rootNode extends cNode {
+    constructor(...arg) {
+        super(...arg);
+    }
+
+    get cost() {
+        return 0;
     }
 }

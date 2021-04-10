@@ -76,6 +76,8 @@ function createRandomNodes(N, R) {
             index++;
         }
     }
+
+    nodes[0] = new rootNode(nodes[0].pos, nodes[0].id, nodes[0].size);
 }
 
 function createNodesFromArray(arr) {

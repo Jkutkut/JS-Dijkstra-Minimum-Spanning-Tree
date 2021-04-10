@@ -10,7 +10,7 @@ function* dijkstra() {
         // search new mates and set them to selected
         for (let node of focusedNode.getMates) {
             priorityQueue.add(node);
-            node.setCost(focusedNode, focusedNode.costToNode(node));
+            node.wayToRoot = focusedNode;
             node.phase = cNode.PHASE.SELECTED;
         }
         yield priorityQueue.size;
