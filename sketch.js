@@ -29,9 +29,13 @@ function setup() {
     createCanvas(mainCanvasWidth, mainCanvasHeight);
 
 
-    // createNodesFromArray(SHAPE);
     createRandomNodes(40, NODESIZE * 3);
     createCloseConnections(NODESIZE * 5);
+    // createNodesFromArray(SHAPE);
+    // createCloseConnections(NODESIZE * 2.4);
+
+
+    alert("Press space to execute a step of Dijkstra's algorithm.");
 }
 
 
@@ -46,6 +50,12 @@ function draw() {
     }
 
 }
+
+function keyPressed(event) {
+    if (event.key == " "){
+        djkIterator.next().value;
+    }
+  }
 
 
 // create nodes:
@@ -99,6 +109,8 @@ function createNodesFromArray(arr) {
         }
         ite++;
     }
+
+    nodes[0] = new rootNode(nodes[0].pos, nodes[0].id, nodes[0].size);
 }
 
 // create connections:
