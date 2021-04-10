@@ -1,4 +1,4 @@
-class cNode {
+class CustomNode {
     static PHASE = {
         NORMAL: 0,
         SELECTED: 1,
@@ -18,7 +18,7 @@ class cNode {
     constructor (pos, id=0, size) {
         this.pos = pos;
         this.id = id;
-        this.phase = 0;
+        this.currentPhase = 0;
 
         this.size = size;
         this.sizeHalf = this.size * 0.5;
@@ -26,7 +26,7 @@ class cNode {
 
         // connections
         this.nodesConnected = new Set();
-        this.connections = new Set();
+        this.currentConnections = new Set();
 
         //Dijkstra:
         this.wayToRoot = undefined;
@@ -107,7 +107,7 @@ class cNode {
         this.currentPhase = newPhase;
     }
     get phaseName() {
-        return this.constructor.PHASESNAMES[this.phase];
+        return CustomNode.PHASESNAMES[this.phase];
     }
 
     // cost
@@ -137,6 +137,10 @@ class cNode {
         return this.wayToRoot;
     }
 
+    get connections() {
+        return this.currentConnections;
+    }
+
 
 
     // physical
@@ -144,7 +148,7 @@ class cNode {
      * Returns the current color of the node based on it's phase property.
      */
      get color() {
-        return this.constructor.COLORS[this.phaseName];
+        return CustomNode.COLORS[this.phaseName];
     }
 
     /**
@@ -156,6 +160,18 @@ class cNode {
         return this.pos.dist(mateNode.pos);
     }
 
+    validateArch(node=null){
+        if (node == null) {
+            node = this.nodeToRoot;
+        }
+
+        for(let a of this.connections) {
+            if (a.aimsToNode(node)) {
+                a.state = Arch.STATES.VALID;
+                return
+            }
+        }
+    }
 
 
     get getMates() {
@@ -192,12 +208,26 @@ class cNode {
     }
 }
 
-class rootNode extends cNode {
+class rootNode extends CustomNode {
     constructor(...arg) {
         super(...arg);
     }
 
     get cost() {
         return 0;
+    }
+}
+
+class cNode extends CustomNode {
+    constructor(...arg) {
+        super(...arg);
+    }
+
+    set phase(newPhase) {
+        cNode.prototype.phase.call(newPhase);
+        if (newPhase = cNode.PHASE.VALID) {
+            this.validateArch();
+            this.nodeToRoot.validateArch();
+        }
     }
 }

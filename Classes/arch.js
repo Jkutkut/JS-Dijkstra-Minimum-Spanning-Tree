@@ -1,5 +1,20 @@
 class Arch {
+    static STATES = {
+        NORMAL: 0,
+        VALID: 1
+    }
+    static STATESNAMES = [
+        "NORMAL",
+        "VALID"
+    ]
+    static COLORS = {
+        NORMAL: [0],
+        VALID: [90, 247, 17]
+    }
+
     constructor(origin, destination) {
+        this.currentState = Arch.STATES.NORMAL;
+
         this.origin = origin;
         this.destination = destination;
 
@@ -19,7 +34,7 @@ class Arch {
 
     show() {
         push();
-            fill(0)
+            fill(...this.color);
             line(
                 this.origin.pos.x - this.lineOffset.start.x,
                 this.origin.pos.y - this.lineOffset.start.y,
@@ -31,6 +46,7 @@ class Arch {
                 rotate(this.angle - PI);
                 translate(this.distancia);
                 push();
+                    fill(0);
                     translate(this.distancia.copy().mult(-0.45).x, 10);
                     rotate(PI * 0.5);
                     text(this.cost, 0, 0)
@@ -48,5 +64,19 @@ class Arch {
 
     aimsToNode(node) {
         return node == this.destination;
+    }
+
+    get color() {
+        return Arch.COLORS[this.stateName];
+    }
+
+    set state(newState) {
+        this.currentState = newState;
+    }
+    get state() {
+        return this.currentState;
+    }
+    get stateName() {
+        return Arch.STATESNAMES[this.state];
     }
 }
