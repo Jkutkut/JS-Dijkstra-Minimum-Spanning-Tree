@@ -112,6 +112,9 @@ class CustomNode {
 
     // cost
     get cost() {
+        if (this.nodeToRoot == null) {
+            return Infinity;
+        }
         return this.nodeToRoot.costToNode(this);
     }
 
@@ -131,7 +134,13 @@ class CustomNode {
 
     // node
     set nodeToRoot(node) {
-        this.wayToRoot = node;
+        if (!this.connectedToNode(node)) {
+            throw new Error("node not connected");
+        }
+
+        if (node.cost + node.costToNode(this) < this.cost) {
+            this.wayToRoot = node;
+        }
     }
     get nodeToRoot() {
         return this.wayToRoot;
@@ -218,6 +227,9 @@ class rootNode extends CustomNode {
         super(...arg);
     }
 
+    // set cost(newCost) {
+    //     return;
+    // }
     get cost() {
         return 0;
     }
