@@ -12,7 +12,8 @@ class CustomNode {
     static COLORS = {
         NORMAL: [54, 235, 255, 180],
         SELECTED: [252, 164, 40],
-        VALID: [22, 242, 140, 250]
+        VALID: [22, 242, 140, 250],
+        ROOT: [0, 132, 255, 180]
     };
 
     constructor (pos, id=0, size) {
@@ -221,9 +222,24 @@ class CustomNode {
         this.nodesConnected = new Set();
         this.connections = new Set();
     }
+
+    static clone(node, nodeClass) {
+        if (!nodeClass.prototype instanceof CustomNode) {
+            throw new Error("nodeClass must be a customNode class instance");
+        }
+        let newNode = new nodeClass(
+            node.pos,
+            node.id,
+            node.size
+        );
+        for (let a of node.nodesConnected) {
+            newNode.addConnection(a);
+        }
+        return newNode;
+    }
 }
 
-class rootNode extends CustomNode {
+class RootNode extends CustomNode {
     constructor(...arg) {
         super(...arg);
     }
@@ -233,6 +249,14 @@ class rootNode extends CustomNode {
     // }
     get cost() {
         return 0;
+    }
+
+    get color() {
+        return CustomNode.COLORS.ROOT;
+    }
+
+    static clone(node) {
+        return super.clone(node, RootNode);
     }
 }
 
@@ -250,5 +274,9 @@ class cNode extends CustomNode {
     }
     get phase() {
         return super.phase;
+    }
+
+    static clone(node) {
+        return super.clone(node, cNode);
     }
 }
