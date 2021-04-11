@@ -16,12 +16,22 @@ var djkIterator = dijkstra(); // iterator with the logic of the algo
 
 
 function setup() {
-    mainCanvasWidth = windowWidth;
-    mainCanvasHeight = windowWidth * 9 / 16;
+    // mainCanvasWidth = windowWidth;
+    // mainCanvasHeight = windowWidth * 9 / 16;
     
-    if (mainCanvasHeight > windowHeight) {
-        mainCanvasWidth = windowHeight * 16 / 9;
-        mainCanvasHeight = windowHeight;
+    // if (mainCanvasHeight > windowHeight) {
+    //     mainCanvasWidth = windowHeight * 16 / 9;
+    //     mainCanvasHeight = windowHeight;
+    // }
+
+    let multiplierW = 0.995;
+    let multiplierH = 0.975;
+    mainCanvasHeight = windowHeight * multiplierH;
+    mainCanvasWidth = windowHeight / 9 * 16 * multiplierW;
+    
+    if (mainCanvasWidth > windowWidth) {
+        mainCanvasHeight = mainCanvasWidth * 9 / 16 * multiplierH;
+        mainCanvasWidth = windowWidth * multiplierW;
     }
 
     NODESIZE = Math.floor(mainCanvasWidth / 25);
