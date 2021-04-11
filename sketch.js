@@ -126,12 +126,26 @@ function createNodesFromArray(arr) {
 
 // root Node
 function updateRootNode(newRootIndex) {
-    nodes[newRootIndex] = RootNode.clone(nodes[newRootIndex]);
+    let auxNode = RootNode.clone(nodes[newRootIndex]);
+
+    for (let node of nodes[newRootIndex].nodesConnected) {
+        node.changeConnection(nodes[newRootIndex], auxNode);
+    }
+
+
+    nodes[newRootIndex] = auxNode;
     if (currentRootNodeIndex != undefined) {
-        nodes[currentRootNodeIndex] = cNode.clone(nodes[currentRootNodeIndex]);
+        auxNode = cNode.clone(nodes[currentRootNodeIndex]);
+
+        for (let node of nodes[currentRootNodeIndex].nodesConnected) {
+            node.changeConnection(nodes[currentRootNodeIndex], auxNode);
+        }
+
+        nodes[currentRootNodeIndex] = auxNode;
     }
     currentRootNodeIndex = newRootIndex;
     djkIterator = dijkstra(nodes[currentRootNodeIndex]);
+
     draw();
 }
 
