@@ -12,8 +12,8 @@ const SHAPE = [
 var nodes = [];
 var NODESIZE;
 
-var djkIterator = dijkstra(); // iterator with the logic of the algo
-
+var djkIterator; // iterator with the logic of the algo
+var currentRootNodeIndex = undefined;
 
 function setup() {
     // mainCanvasWidth = windowWidth;
@@ -97,7 +97,7 @@ function createRandomNodes(N, R) {
         }
     }
 
-    nodes[0] = new rootNode(nodes[0].pos, nodes[0].id, nodes[0].size);
+    updateRootNode(0);
 }
 
 function createNodesFromArray(arr) {
@@ -120,8 +120,21 @@ function createNodesFromArray(arr) {
         ite++;
     }
 
-    nodes[0] = new rootNode(nodes[0].pos, nodes[0].id, nodes[0].size);
+    updateRootNode(0);
 }
+
+
+// root Node
+function updateRootNode(newRootIndex) {
+    nodes[newRootIndex] = RootNode.clone(nodes[newRootIndex]);
+    if (currentRootNodeIndex != undefined) {
+        nodes[currentRootNodeIndex] = cNode.clone(nodes[currentRootNodeIndex]);
+    }
+    currentRootNodeIndex = newRootIndex;
+    djkIterator = dijkstra(nodes[currentRootNodeIndex]);
+    draw();
+}
+
 
 // create connections:
 
