@@ -1,8 +1,11 @@
-function* dijkstra() {
-    i = 0;
+function* dijkstra(rootNode) {
+    if (! rootNode instanceof RootNode) {
+        throw new Error("The starting node must be a RootNode");
+    }
+    
     // priorityQueue = new BinarySearchTree();
     priorityQueue = new Set();
-    focusedNode = nodes[0];
+    focusedNode = rootNode;
     while (true) {
         focusedNode.phase = cNode.PHASE.VALID;
         // console.log("Current node: node" + focusedNode.id);
