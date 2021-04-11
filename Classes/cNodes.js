@@ -137,6 +137,8 @@ class CustomNode {
     // node
     set nodeToRoot(node) {
         if (!this.connectedToNode(node)) {
+            console.error(this);
+            console.error(node);
             throw new Error("node not connected");
         }
 
@@ -237,6 +239,20 @@ class CustomNode {
         }
         return newNode;
     }
+
+    changeConnection(oldNode, newNode) {
+        this.nodesConnected.delete(oldNode);
+        this.nodesConnected.add(newNode);
+
+        for (let a of this.connections) {
+            if (a.aimsToNode(oldNode)) {
+                a.changeDestination(newNode);
+                break;
+            }
+        }
+    }
+
+    
 }
 
 class RootNode extends CustomNode {
