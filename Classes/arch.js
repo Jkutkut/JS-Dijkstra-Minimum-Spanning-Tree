@@ -83,4 +83,12 @@ class Arch {
     get stateName() {
         return Arch.STATESNAMES[this.state];
     }
+
+    changeDestination(newNode) {
+        if (!newNode instanceof CustomNode) {
+            console.log(newNode)
+            throw new Error("The destination must be a node");
+        }
+        this.destination = newNode;
+    }
 }
