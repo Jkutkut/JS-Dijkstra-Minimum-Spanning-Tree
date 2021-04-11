@@ -65,7 +65,19 @@ function keyPressed(event) {
     if (event.key == " "){
         djkIterator.next().value;
     }
-  }
+}
+
+function mouseClicked() {
+    let mousePos = createVector(mouseX, mouseY);
+
+    for (let i = 0; i < nodes.length; i++) {
+        if (mousePos.dist(nodes[i].pos) <= nodes[i].sizeHalf) {
+            updateRootNode(i);
+            break;
+        }
+    }
+}
+
 
 
 // create nodes:
