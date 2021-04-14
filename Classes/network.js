@@ -4,8 +4,8 @@ class Network {
     };
 
     constructor(canvasWidth, canvasHeight) {
-        this.canvasSize = {w: canvasWidth, h:canvasHeight};
-        this.NODESIZE = Math.floor(mainCanvasWidth / 25);
+        this._canvasSize = {w: canvasWidth, h:canvasHeight};
+        this._NODESIZE = Math.floor(mainCanvasWidth / 25);
 
         this.nodes = new Set();
         this.rootNode = new NetworkNode(
@@ -24,6 +24,15 @@ class Network {
         for (let node of this.nodes) {
             node.show();
         }
+    }
+
+    // GETTERS AND SETTERS
+    /**
+     * Size of the current canvas where the nodes are placed.
+     * @returns {w: XXXXX, h:YYYYY} object with the width (XXXXX) and the height (YYYYY) of the canvas in pixels.
+     */
+    get canvasSize() {
+        return this._canvasSize;
     }
 
     // NODE CREATION
