@@ -18,7 +18,7 @@ class NetworkNode {
 
     constructor (pos, id=0, size) {
         this.pos = pos;
-        this.id = id;
+        this._id = id;
         this.currentPhase = 0;
 
         this.size = size;
@@ -66,22 +66,15 @@ class NetworkNode {
      * @returns {any} Current ID
      */
     get id() {
-        return this.IDvalue;
+        return this._id;
     }
-    /**
-     * Overwrites the current ID of the node. This ID is just visual, so any ID is valid.
-     * @param newID {any} New ID
-     */
-    set id(newID) {
-        this.IDvalue = newID;
-    } 
 
     // position
     /**
      * @returns {p5.Vector} Current position of the node as a p5.Vector.
      */
     get pos() {
-        return this.position;
+        return this._pos;
     }
     /**
      * Changes the position of the node
@@ -92,7 +85,7 @@ class NetworkNode {
         if (!newPos instanceof p5.Vector) {
             throw new Error("The new position must be a p5.Vector");
         }
-        this.position = newPos;
+        this._pos = newPos;
     }
 
     // phase
@@ -107,13 +100,13 @@ class NetworkNode {
      * @param newPhase {number} int value of the desired phase
      * @throws Error if phase not valid
      */
-    set phase(newPhase) {
-        if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < NetworkNode.PHASESNAMES.length)){
-            throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
-        }
-        this.currentPhase = newPhase;
-        this.show();
-    }
+    // set phase(newPhase) {
+    //     if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < NetworkNode.PHASESNAMES.length)){
+    //         throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
+    //     }
+    //     this.currentPhase = newPhase;
+    //     this.show();
+    // }
     /**
      * Returns the String equivalent of the current phase of the node.
      */
@@ -126,48 +119,48 @@ class NetworkNode {
      * Returns the cost to reach this node from RootNode
      * @returns the cost or infinity if the nodeToRoot is not defined
      */
-    get cost() {
-        if (this.nodeToRoot == null) {
-            return Infinity;
-        }
-        return this.nodeToRoot.costToNode(this);
-    }
+    // get cost() {
+    //     if (this.nodeToRoot == null) {
+    //         return Infinity;
+    //     }
+    //     return this.nodeToRoot.costToNode(this);
+    // }
 
     /**
      * returns the cost to reach a particular node connected to this one.
      * @param {NetworkNode} nodeToFind 
      * @returns the cost to that node or null if not connected.
      */
-    costToNode(nodeToFind) {
-        if (!this.connectedToNode(nodeToFind)) {
-            console.log("Not found");
-            return null;
-        }
+    // costToNode(nodeToFind) {
+    //     if (!this.connectedToNode(nodeToFind)) {
+    //         console.log("Not found");
+    //         return null;
+    //     }
 
-        for (let a of this.connections) {
-            if (a.aimsToNode(nodeToFind)) {
-                return this.cost + a.cost;
-            }
-        }
-        throw Error("Node connected but cost not found!");
-    }
+    //     for (let a of this.connections) {
+    //         if (a.aimsToNode(nodeToFind)) {
+    //             return this.cost + a.cost;
+    //         }
+    //     }
+    //     throw Error("Node connected but cost not found!");
+    // }
 
     // node
     
-    set nodeToRoot(node) {
-        if (!this.connectedToNode(node)) {
-            console.error(this);
-            console.error(node);
-            throw new Error("node not connected");
-        }
+    // set nodeToRoot(node) {
+    //     if (!this.connectedToNode(node)) {
+    //         console.error(this);
+    //         console.error(node);
+    //         throw new Error("node not connected");
+    //     }
 
-        if (node.cost + node.costToNode(this) < this.cost) {
-            this.wayToRoot = node;
-        }
-    }
-    get nodeToRoot() {
-        return this.wayToRoot;
-    }
+    //     if (node.cost + node.costToNode(this) < this.cost) {
+    //         this.wayToRoot = node;
+    //     }
+    // }
+    // get nodeToRoot() {
+    //     return this.wayToRoot;
+    // }
 
     get connections() {
         return this.currentConnections;
@@ -192,66 +185,66 @@ class NetworkNode {
         return this.pos.dist(mateNode.pos);
     }
 
-    validateArch(node=null){
-        if (node == null) {
-            node = this.nodeToRoot;
-        }
+    // validateArch(node=null){
+    //     if (node == null) {
+    //         node = this.nodeToRoot;
+    //     }
 
-        if (!this.connectedToNode(node)) {
-            return
-        }
+    //     if (!this.connectedToNode(node)) {
+    //         return
+    //     }
 
-        for(let a of this.connections) {
-            if (a.aimsToNode(node)) {
-                a.state = Arch.STATES.VALID;
-                return
-            }
-        }
-        throw new Error("error");
-    }
+    //     for(let a of this.connections) {
+    //         if (a.aimsToNode(node)) {
+    //             a.state = Arch.STATES.VALID;
+    //             return
+    //         }
+    //     }
+    //     throw new Error("error");
+    // }
 
 
-    get getMates() {
-        // return this.nodesConnected;
-        let mates = new Set();
-        for (let node of this.nodesConnected) {
-            if (node.phase != NetworkNode.PHASE.VALID && node.phase != NetworkNode.PHASE.ROOT) {
-                mates.add(node);
-            }
-        }
-        return mates;
-    }
+    // get getMates() {
+    //     // return this.nodesConnected;
+    //     let mates = new Set();
+    //     for (let node of this.nodesConnected) {
+    //         if (node.phase != NetworkNode.PHASE.VALID && node.phase != NetworkNode.PHASE.ROOT) {
+    //             mates.add(node);
+    //         }
+    //     }
+    //     return mates;
+    // }
 
     connectedToNode(node) {
         return this.nodesConnected.has(node);
     }
 
-    addConnection(destination) {
-        if (this.nodesConnected.has(destination)) {
-            console.warn("already in");
-            return
-        }
-        if (this == destination) {
-            console.warn("same node as destination")
-            return
-        }
-        this.connections.add(new Arch(this, destination));
-        this.nodesConnected.add(destination)
-    }
+    // addConnection(destination) {
+    //     if (this.nodesConnected.has(destination)) {
+    //         console.warn("already in");
+    //         return
+    //     }
+    //     if (this == destination) {
+    //         console.warn("same node as destination")
+    //         return
+    //     }
+    //     this.connections.add(new NodeLink(this, destination));
+    //     // this.nodesConnected.add(destination)
+    // }
 
-    resetConnections() {
-        this.nodesConnected = new Set();
-        this.connections = new Set();
-    }
+    // resetConnections() {
+    //     this.nodesConnected = new Set();
+    //     this.connections = new Set();
+    // }
 
-    resetNode() {
-        this.phase = NetworkNode.PHASE.NORMAL;
-        this.wayToRoot = null;
+    // resetNode() {
+    //     this.phase = NetworkNode.PHASE.NORMAL;
+    //     this.wayToRoot = null;
 
-        for (let a of this.connections) {
-            a.state = Arch.STATES.NORMAL;
-        }
-    }
+    //     for (let a of this.connections) {
+    //         a.state = Arch.STATES.NORMAL;
+    //     }
+    // }
 
     static clone(node, nodeClass) {
         if (!nodeClass.prototype instanceof NetworkNode) {
@@ -268,21 +261,21 @@ class NetworkNode {
         return newNode;
     }
 
-    changeConnection(oldNode, newNode) {
-        if (!this.nodesConnected.has(oldNode)) {
-            throw new Error("OldNode not connected");
-        }
+    // changeConnection(oldNode, newNode) {
+    //     if (!this.nodesConnected.has(oldNode)) {
+    //         throw new Error("OldNode not connected");
+    //     }
 
-        this.nodesConnected.delete(oldNode);
-        this.nodesConnected.add(newNode);
+    //     this.nodesConnected.delete(oldNode);
+    //     this.nodesConnected.add(newNode);
 
-        for (let a of this.connections) {
-            if (a.aimsToNode(oldNode)) {
-                a.changeDestination(newNode);
-                break;
-            }
-        }
-    }
+    //     for (let a of this.connections) {
+    //         if (a.aimsToNode(oldNode)) {
+    //             a.changeDestination(newNode);
+    //             break;
+    //         }
+    //     }
+    // }
 
     
 }
