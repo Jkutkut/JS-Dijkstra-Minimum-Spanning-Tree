@@ -27,7 +27,7 @@ class NetworkNode {
 
         // connections
         this.nodesConnected = new Set();
-        this.currentConnections = new Set();
+        this._links = new Set();
 
         //Dijkstra:
         this.wayToRoot = undefined;
@@ -162,8 +162,8 @@ class NetworkNode {
     //     return this.wayToRoot;
     // }
 
-    get connections() {
-        return this.currentConnections;
+    get links() {
+        return this._links;
     }
 
 
@@ -219,18 +219,18 @@ class NetworkNode {
         return this.nodesConnected.has(node);
     }
 
-    // addConnection(destination) {
-    //     if (this.nodesConnected.has(destination)) {
-    //         console.warn("already in");
-    //         return
-    //     }
-    //     if (this == destination) {
-    //         console.warn("same node as destination")
-    //         return
-    //     }
-    //     this.connections.add(new NodeLink(this, destination));
-    //     // this.nodesConnected.add(destination)
-    // }
+    addConnection(destination) {
+        if (this.nodesConnected.has(destination)) {
+            console.warn("already in");
+            return
+        }
+        if (this == destination) {
+            console.warn("same node as destination")
+            return
+        }
+        this.links.add(new NodeLink(this, destination));
+        this.nodesConnected.add(destination)
+    }
 
     // resetConnections() {
     //     this.nodesConnected = new Set();

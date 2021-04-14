@@ -16,13 +16,18 @@ class Network {
         );
 
 
-        this.nodes.add(this.rootNode);
+        this.nodes.add(this._rootNode);
         this.createRandomNodes(40, 3 * this.NODESIZE);
+        this.createCloseConnections(this.NODESIZE * 5);
+
     }
 
     show() {
         for (let node of this.nodes) {
             node.show();
+            for (let link of node.links) {
+                link.show();
+            }
         }
     }
 
@@ -49,7 +54,8 @@ class Network {
         return this._nodes;
     }
 
-    // NODE CREATION
+    // ELEMENTS CREATION
+    // NODE
     createRandomNodes(N, R) {
         let MAXATTEMPS = 1000;
         let attempt, pos, node, validNode;
@@ -65,7 +71,7 @@ class Network {
                 );
                 node = new NetworkNode(pos, index, this.NODESIZE);
                 for (let otherNode of this.nodes) {
-                    if (otherNode.dist(node) <= R) {
+                    if (node.dist(otherNode) <= R) {
                         validNode = false;
                         break;
                     }
@@ -74,6 +80,19 @@ class Network {
             if (validNode) {
                 this.nodes.add(node);
                 index++;
+            }
+        }
+    }
+    // LINK
+    createCloseConnections(maxDistance) {
+        for (let node of this.nodes) {
+            for (let mateNode of this.nodes) {
+                if (mateNode == node) {
+                    continue
+                }
+                if (node.dist(mateNode) <= maxDistance) {
+                    node.addConnection(mateNode)
+                }
             }
         }
     }
