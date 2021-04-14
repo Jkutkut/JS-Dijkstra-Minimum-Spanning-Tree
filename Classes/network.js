@@ -7,17 +7,17 @@ class Network {
         this._canvasSize = {w: canvasWidth, h:canvasHeight};
         this._NODESIZE = Math.floor(mainCanvasWidth / 25);
 
-        this.nodes = new Set();
-        this.rootNode = new NetworkNode(
+        this._nodes = new Set();
+        
+        this._rootNode = new NetworkNode(
             this.createCenteredVector(0, 0),
             0, 
             this.NODESIZE
         );
-        this.nodes.add(this.rootNode);
-        
-        this.createRandomNodes(40, 3 * this.NODESIZE);
 
-        console.log("class created")
+
+        this.nodes.add(this.rootNode);
+        this.createRandomNodes(40, 3 * this.NODESIZE);
     }
 
     show() {
@@ -33,6 +33,20 @@ class Network {
      */
     get canvasSize() {
         return this._canvasSize;
+    }
+    
+    /**
+     * @returns the intended size of the nodes as a number.
+     */
+    get NODESIZE() {
+        return this._NODESIZE;
+    }
+
+    /**
+     * @returns the set of NetworkNodes stored on the object.
+     */
+    get nodes() {
+        return this._nodes;
     }
 
     // NODE CREATION
