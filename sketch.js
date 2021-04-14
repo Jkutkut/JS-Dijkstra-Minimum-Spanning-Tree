@@ -1,18 +1,14 @@
 var mainCanvasHeight, mainCanvasWidth;
-const ELEM = 12;
-const R = 200;
+// const ELEM = 12;
+// const R = 200;
 
-const SHAPE = [
-    {R: 100, ELEM: 6},
-    {R: 200, ELEM: 6},
-    {R: 300, ELEM: 6}
-];
+// const SHAPE = [
+//     {R: 100, ELEM: 6},
+//     {R: 200, ELEM: 6},
+//     {R: 300, ELEM: 6}
+// ];
 
-
-var NODESIZE;
-
-var djkIterator; // iterator with the logic of the algo
-var currentRootNodeIndex = undefined;
+var netWork;
 
 function setup() {
     
@@ -28,18 +24,15 @@ function setup() {
 
     
     createCanvas(mainCanvasWidth, mainCanvasHeight);
+
+    netWork = new Network(mainCanvasWidth, mainCanvasHeight);
 }
 
 
 
 function draw() {
     background(color(240));
-    // for (let arrow of nodes) {
-    //     arrow.drawConnections();
-    // }
-    // for (let node of nodes) {
-    //     node.show();
-    // }
+    netWork.show();
     noLoop();
 }
 
