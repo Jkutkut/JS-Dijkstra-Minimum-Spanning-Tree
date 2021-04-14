@@ -1,4 +1,8 @@
 class NetworkNode {
+    static ERRORS = {
+        NODEINPUT: new Error("The input must be a NetworkNode object."),
+        P5VECTOR: new Error("The input must be a p5.Vector")
+    };
     static PHASE = {
         NORMAL: 0,
         SELECTED: 1,
@@ -49,18 +53,20 @@ class NetworkNode {
     }
 
     /**
-     * Draws all the connections to other nodes
+     * Draws all the connection links to the nodes connected.
      */
-    drawConnections() {
-        // this code is to make the arrow point
-        for (let arrow of this.connections) {
-            arrow.show();
+    showLinks() {
+        for (let link of this.links) {
+            link.show();
         }
     }
 
+
+
     // GETTERS AND SETTERS
 
-    // ID
+
+    // id
     /**
      * Returns the node current ID
      * @returns {any} Current ID
@@ -69,6 +75,7 @@ class NetworkNode {
         return this._id;
     }
 
+
     // position
     /**
      * @returns {p5.Vector} Current position of the node as a p5.Vector.
@@ -76,6 +83,7 @@ class NetworkNode {
     get pos() {
         return this._pos;
     }
+
     /**
      * Changes the position of the node
      * @param newPos {p5.Vector} New desired position
@@ -83,10 +91,11 @@ class NetworkNode {
      */
     set pos(newPos) {
         if (!newPos instanceof p5.Vector) {
-            throw new Error("The new position must be a p5.Vector");
+            throw this.ERRORS.P5VECTOR
         }
         this._pos = newPos;
     }
+
 
     // phase
     /**
@@ -109,7 +118,6 @@ class NetworkNode {
 
 
 
-    // physical
     /**
      * Returns the current color of the node based on it's phase property.
      */
@@ -140,7 +148,7 @@ class NetworkNode {
             return
         }
         this.links.add(new NodeLink(this, destination));
-        this.nodesConnected.add(destination)
+        this.nodesConnected.add(destination);
     }
 
     // STATIC METHODS

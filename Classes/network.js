@@ -25,9 +25,7 @@ class Network {
     show() {
         for (let node of this.nodes) {
             node.show();
-            for (let link of node.links) {
-                link.show();
-            }
+            node.showLinks();
         }
     }
 
