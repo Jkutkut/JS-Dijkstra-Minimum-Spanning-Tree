@@ -153,6 +153,7 @@ class CustomNode {
     }
 
     // node
+    
     set nodeToRoot(node) {
         if (!this.connectedToNode(node)) {
             console.error(this);
