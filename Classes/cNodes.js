@@ -196,7 +196,7 @@ class CustomNode {
         // return this.nodesConnected;
         let mates = new Set();
         for (let node of this.nodesConnected) {
-            if (node.phase != cNode.PHASE.VALID) {
+            if (node.phase != cNode.PHASE.VALID && node.phase != cNode.PHASE.ROOT) {
                 mates.add(node);
             }
         }
@@ -225,6 +225,15 @@ class CustomNode {
         this.connections = new Set();
     }
 
+    resetNode() {
+        this.phase = CustomNode.PHASE.NORMAL;
+        this.wayToRoot = null;
+
+        for (let a of this.connections) {
+            a.state = Arch.STATES.NORMAL;
+        }
+    }
+
     static clone(node, nodeClass) {
         if (!nodeClass.prototype instanceof CustomNode) {
             throw new Error("nodeClass must be a customNode class instance");
@@ -241,6 +250,10 @@ class CustomNode {
     }
 
     changeConnection(oldNode, newNode) {
+        if (!this.nodesConnected.has(oldNode)) {
+            throw new Error("OldNode not connected");
+        }
+
         this.nodesConnected.delete(oldNode);
         this.nodesConnected.add(newNode);
 
@@ -269,6 +282,13 @@ class RootNode extends CustomNode {
 
     get color() {
         return CustomNode.COLORS.ROOT;
+    }
+
+    get phase() {
+        return super.phase;
+    }
+    set phase(newPhase) {
+        // pass
     }
 
     static clone(node) {

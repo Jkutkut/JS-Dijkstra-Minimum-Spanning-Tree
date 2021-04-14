@@ -9,8 +9,8 @@ function* dijkstra(rootNode) {
     while (true) {
         focusedNode.phase = cNode.PHASE.VALID;
         // console.log("Current node: node" + focusedNode.id);
-        // yield focusedNode;
-        yield;
+        yield focusedNode;
+        // yield;
         // search new mates and set them to selected
         for (let node of focusedNode.getMates) {
             priorityQueue.add(node);
@@ -24,8 +24,8 @@ function* dijkstra(rootNode) {
             return;
         }
         // for(let n of priorityQueue){console.log("Node" + n.id + " -> " + n.cost)}
-        // yield priorityQueue;
-        yield;
+        yield priorityQueue;
+        // yield;
 
         // search min cost and set that node to valid
         let minCost = Infinity;

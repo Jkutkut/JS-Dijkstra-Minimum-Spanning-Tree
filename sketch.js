@@ -63,7 +63,7 @@ function draw() {
 
 function keyPressed(event) {
     if (event.key == " "){
-        djkIterator.next().value;
+        console.log(djkIterator.next().value);
     }
 }
 
@@ -156,8 +156,13 @@ function updateRootNode(newRootIndex) {
         nodes[currentRootNodeIndex] = auxNode;
     }
     currentRootNodeIndex = newRootIndex;
-    djkIterator = dijkstra(nodes[currentRootNodeIndex]);
 
+    for(let node of nodes) {
+        node.resetNode();
+    }
+
+    djkIterator = dijkstra(nodes[currentRootNodeIndex]);
+    
     draw();
 }
 
