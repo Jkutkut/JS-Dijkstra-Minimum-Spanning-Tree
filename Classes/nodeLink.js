@@ -83,12 +83,4 @@ class NodeLink {
     get stateName() {
         return NodeLink.STATESNAMES[this.state];
     }
-
-    changeDestination(newNode) {
-        if (!newNode instanceof NetworkNode) {
-            console.log(newNode)
-            throw new Error("The destination must be a node");
-        }
-        this.destination = newNode;
-    }
 }
