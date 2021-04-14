@@ -1,4 +1,4 @@
-class CustomNode {
+class NetworkNode {
     static PHASE = {
         NORMAL: 0,
         SELECTED: 1,
@@ -108,7 +108,7 @@ class CustomNode {
      * @throws Error if phase not valid
      */
     set phase(newPhase) {
-        if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < cNode.PHASESNAMES.length)){
+        if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < NetworkNode.PHASESNAMES.length)){
             throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
         }
         this.currentPhase = newPhase;
@@ -118,7 +118,7 @@ class CustomNode {
      * Returns the String equivalent of the current phase of the node.
      */
     get phaseName() {
-        return CustomNode.PHASESNAMES[this.phase];
+        return NetworkNode.PHASESNAMES[this.phase];
     }
 
     // cost
@@ -135,7 +135,7 @@ class CustomNode {
 
     /**
      * returns the cost to reach a particular node connected to this one.
-     * @param {CustomNode} nodeToFind 
+     * @param {NetworkNode} nodeToFind 
      * @returns the cost to that node or null if not connected.
      */
     costToNode(nodeToFind) {
@@ -180,12 +180,12 @@ class CustomNode {
      * Returns the current color of the node based on it's phase property.
      */
      get color() {
-        return CustomNode.COLORS[this.phaseName];
+        return NetworkNode.COLORS[this.phaseName];
     }
 
     /**
      * Returns current distance in pixels to the selected node.
-     * @param {cNode} mateNode desired node
+     * @param {NetworkNode} mateNode desired node
      * @returns Distance in pixels to the selected node
      */
     dist(mateNode) {
@@ -215,7 +215,7 @@ class CustomNode {
         // return this.nodesConnected;
         let mates = new Set();
         for (let node of this.nodesConnected) {
-            if (node.phase != cNode.PHASE.VALID && node.phase != cNode.PHASE.ROOT) {
+            if (node.phase != NetworkNode.PHASE.VALID && node.phase != NetworkNode.PHASE.ROOT) {
                 mates.add(node);
             }
         }
@@ -245,7 +245,7 @@ class CustomNode {
     }
 
     resetNode() {
-        this.phase = CustomNode.PHASE.NORMAL;
+        this.phase = NetworkNode.PHASE.NORMAL;
         this.wayToRoot = null;
 
         for (let a of this.connections) {
@@ -254,8 +254,8 @@ class CustomNode {
     }
 
     static clone(node, nodeClass) {
-        if (!nodeClass.prototype instanceof CustomNode) {
-            throw new Error("nodeClass must be a customNode class instance");
+        if (!nodeClass.prototype instanceof NetworkNode) {
+            throw new Error("nodeClass must be a NetworkNode class instance");
         }
         let newNode = new nodeClass(
             node.pos,
@@ -287,51 +287,51 @@ class CustomNode {
     
 }
 
-class RootNode extends CustomNode {
-    constructor(...arg) {
-        super(...arg);
-    }
+// class RootNode extends NetworkNode {
+//     constructor(...arg) {
+//         super(...arg);
+//     }
 
-    // set cost(newCost) {
-    //     return;
-    // }
-    get cost() {
-        return 0;
-    }
+//     // set cost(newCost) {
+//     //     return;
+//     // }
+//     get cost() {
+//         return 0;
+//     }
 
-    get color() {
-        return CustomNode.COLORS.ROOT;
-    }
+//     get color() {
+//         return NetworkNode.COLORS.ROOT;
+//     }
 
-    get phase() {
-        return super.phase;
-    }
-    set phase(newPhase) {
-        // pass
-    }
+//     get phase() {
+//         return super.phase;
+//     }
+//     set phase(newPhase) {
+//         // pass
+//     }
 
-    static clone(node) {
-        return super.clone(node, RootNode);
-    }
-}
+//     static clone(node) {
+//         return super.clone(node, RootNode);
+//     }
+// }
 
-class cNode extends CustomNode {
-    constructor(...arg) {
-        super(...arg);
-    }
+// class NetworkNode extends NetworkNode {
+//     constructor(...arg) {
+//         super(...arg);
+//     }
 
-    set phase(newPhase) {
-        super.phase = newPhase;
-        if (newPhase == cNode.PHASE.VALID) {
-            this.validateArch();
-            this.nodeToRoot.validateArch(this);
-        }
-    }
-    get phase() {
-        return super.phase;
-    }
+//     set phase(newPhase) {
+//         super.phase = newPhase;
+//         if (newPhase == NetworkNode.PHASE.VALID) {
+//             this.validateArch();
+//             this.nodeToRoot.validateArch(this);
+//         }
+//     }
+//     get phase() {
+//         return super.phase;
+//     }
 
-    static clone(node) {
-        return super.clone(node, cNode);
-    }
-}
+//     static clone(node) {
+//         return super.clone(node, NetworkNode);
+//     }
+// }
