@@ -1,4 +1,4 @@
-class Arch {
+class NodeLink {
     static STATES = {
         NORMAL: 0,
         VALID: 1
@@ -13,7 +13,7 @@ class Arch {
     }
 
     constructor(origin, destination) {
-        this.currentState = Arch.STATES.NORMAL;
+        this.currentState = NodeLink.STATES.NORMAL;
 
         this.origin = origin;
         this.destination = destination;
@@ -70,7 +70,7 @@ class Arch {
     }
 
     get color() {
-        return Arch.COLORS[this.stateName];
+        return NodeLink.COLORS[this.stateName];
     }
 
     set state(newState) {
@@ -81,11 +81,11 @@ class Arch {
         return this.currentState;
     }
     get stateName() {
-        return Arch.STATESNAMES[this.state];
+        return NodeLink.STATESNAMES[this.state];
     }
 
     changeDestination(newNode) {
-        if (!newNode instanceof CustomNode) {
+        if (!newNode instanceof NetworkNode) {
             console.log(newNode)
             throw new Error("The destination must be a node");
         }
