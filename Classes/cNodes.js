@@ -33,6 +33,9 @@ class CustomNode {
         this.wayToRoot = undefined;
     }
 
+    /**
+     * Draws the node on the p5.Canvas
+     */
     show() {
         push();
             translate(this.pos);
@@ -45,6 +48,9 @@ class CustomNode {
         pop();
     }
 
+    /**
+     * Draws all the connections to other nodes
+     */
     drawConnections() {
         // this code is to make the arrow point
         for (let arrow of this.connections) {
@@ -108,11 +114,18 @@ class CustomNode {
         this.currentPhase = newPhase;
         this.show();
     }
+    /**
+     * Returns the String equivalent of the current phase of the node.
+     */
     get phaseName() {
         return CustomNode.PHASESNAMES[this.phase];
     }
 
     // cost
+    /**
+     * Returns the cost to reach this node from RootNode
+     * @returns the cost or infinity if the nodeToRoot is not defined
+     */
     get cost() {
         if (this.nodeToRoot == null) {
             return Infinity;
@@ -120,6 +133,11 @@ class CustomNode {
         return this.nodeToRoot.costToNode(this);
     }
 
+    /**
+     * returns the cost to reach a particular node connected to this one.
+     * @param {CustomNode} nodeToFind 
+     * @returns the cost to that node or null if not connected.
+     */
     costToNode(nodeToFind) {
         if (!this.connectedToNode(nodeToFind)) {
             console.log("Not found");
