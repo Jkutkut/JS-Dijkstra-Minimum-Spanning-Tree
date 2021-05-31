@@ -9,14 +9,6 @@ class Network {
 
         this._nodes = new Set();
         
-        this._rootNode = new NetworkNode(
-            this.createCenteredVector(0, 0),
-            0, 
-            this.NODESIZE
-        );
-
-
-        this.nodes.add(this._rootNode);
         this.createRandomNodes(40, 3 * this.NODESIZE);
         this.createCloseConnections(this.NODESIZE * 5);
 
