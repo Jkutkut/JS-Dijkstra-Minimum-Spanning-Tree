@@ -95,6 +95,9 @@ class Network {
         }
     }
 
+    // NODE MANIPULATION
+    
+
     // TOOLS
     /**
      * Creates a p5.Vector with the position given from the center of the screen.
