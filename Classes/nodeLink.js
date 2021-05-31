@@ -65,6 +65,10 @@ class NodeLink {
         pop();
     }
 
+    get weight() {
+        return this.distancia;
+    }
+
     aimsToNode(node) {
         return node == this.destination;
     }
