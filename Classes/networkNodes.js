@@ -110,13 +110,13 @@ class NetworkNode {
      * @param newPhase {number} int value of the desired phase
      * @throws Error if phase not valid
      */
-    // set phase(newPhase) {
-    //     if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < NetworkNode.PHASESNAMES.length)){
-    //         throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
-    //     }
-    //     this.currentPhase = newPhase;
-    //     this.show();
-    // }
+    set phase(newPhase) {
+        if (!Number.isInteger(newPhase) || !(newPhase >= 0 && newPhase < NetworkNode.PHASESNAMES.length)){
+            throw new Error("The new phase must be a " + this.constructor.name + ".PHASE.X value");
+        }
+        this.currentPhase = newPhase;
+        this.show();
+    }
 
     /**
      * Returns the String equivalent of the current phase of the node.
