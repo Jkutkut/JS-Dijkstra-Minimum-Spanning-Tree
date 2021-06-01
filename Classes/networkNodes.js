@@ -1,20 +1,38 @@
+/**
+ * Class to implement Nodes on the Network class.
+ */
 class NetworkNode {
+    /**
+     * Standar errors of the class.
+     */
     static ERRORS = {
         NODEINPUT: new Error("The input must be a NetworkNode object."),
         P5VECTOR: new Error("The input must be a p5.Vector")
     };
+
+    /**
+     * Standar phases of the node.
+     */
     static PHASE = {
         NORMAL: 0,
         SELECTED: 1,
         VALID: 2,
         ROOT: 3
     }
+
+    /**
+     * Standar phase names of the node.
+     */
     static PHASESNAMES = [
         "NORMAL",
         "SELECTED",
         "VALID",
         "ROOT"
     ];
+
+    /**
+     * Standar color of each phase.
+     */
     static COLORS = {
         NORMAL: [54, 235, 255, 180],
         SELECTED: [252, 164, 40],
