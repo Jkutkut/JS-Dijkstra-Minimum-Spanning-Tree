@@ -25,19 +25,19 @@ function keyPressed(event) {
             djkIterator = dijkstra(netWork, 6);
         }
         let f = djkIterator.next();
-        let v = f.value;
-        if (v instanceof NetworkNode) {
-            console.log(v.id);
-        }
-        else if (v instanceof FlatQueue) {
-            console.log(v);
-        }
-        else if (v instanceof NodeLink) {
-            console.log(v.toString());
-        }
-        else {
-            console.log(f);
-        }
+        // let v = f.value;
+        // if (v instanceof NetworkNode) {
+        //     console.log(v.id);
+        // }
+        // else if (v instanceof FlatQueue) {
+        //     console.log(v);
+        // }
+        // else if (v instanceof NodeLink) {
+        //     console.log(v.toString());
+        // }
+        // else {
+        //     console.log(f);
+        // }
     }
 }
 

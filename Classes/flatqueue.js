@@ -94,7 +94,7 @@ class FlatQueue {
      * @param {any} obj - Object to update.
      * @param {number} newValue - new priority value.
      */
-    decreaseKey(obj, newValue) {
+    update(obj, newValue) {
         let parent = function(index) {return Math.floor((index - 1) / 2);}
         for (let i = 0; i < this.length; i++) {
             if (this.elements[i] == obj) {
