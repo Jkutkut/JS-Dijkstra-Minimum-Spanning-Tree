@@ -15,20 +15,20 @@ class NodeLink {
     constructor(origin, destination) {
         this.currentState = NodeLink.STATES.NORMAL;
 
-        this.origin = origin;
-        this.destination = destination;
+        this._from = origin;
+        this._to = destination;
 
-        this.distancia = createVector(this.origin.pos.copy().dist(this.destination.pos) - this.destination.size * 0.5);
-        this.angle = atan2(this.origin.pos.y - this.destination.pos.y, this.origin.pos.x - this.destination.pos.x); //gets the angle of the line
+        this.distancia = createVector(this.from.pos.copy().dist(this.to.pos) - this.to.size * 0.5);
+        this.angle = atan2(this.from.pos.y - this.to.pos.y, this.from.pos.x - this.to.pos.x); //gets the angle of the line
 
         this.cost = Math.floor(this.distancia.x / 10);
 
-        this.arrowTipSize = this.destination.size / 4;
+        this.arrowTipSize = this.to.size / 4;
 
         let offsetV = createVector(1, 0).rotate(this.angle);
         this.lineOffset = {
-            start: offsetV.copy().mult(this.origin.size * 0.5),
-            end: offsetV.copy().mult(this.destination.size * 0.5)
+            start: offsetV.copy().mult(this.from.size * 0.5),
+            end: offsetV.copy().mult(this.to.size * 0.5)
         }
     }
 
@@ -38,13 +38,13 @@ class NodeLink {
             push()
                 stroke(...this.color);
                 line(
-                    this.origin.pos.x - this.lineOffset.start.x,
-                    this.origin.pos.y - this.lineOffset.start.y,
-                    this.destination.pos.x + this.lineOffset.end.x,
-                    this.destination.pos.y + this.lineOffset.end.y
+                    this.from.pos.x - this.lineOffset.start.x,
+                    this.from.pos.y - this.lineOffset.start.y,
+                    this.to.pos.x + this.lineOffset.end.x,
+                    this.to.pos.y + this.lineOffset.end.y
                 )
             pop()
-            translate(this.origin.pos.x, this.origin.pos.y); //translates to the destination vertex
+            translate(this.from.pos.x, this.from.pos.y); //translates to the destination vertex
             push();
                 rotate(this.angle - PI);
                 translate(this.distancia);
@@ -66,11 +66,11 @@ class NodeLink {
     }
 
     get from() {
-        return this.origin;
+        return this._from;
     }
     
     get to() {
-        return this.destination;
+        return this._to;
     }
 
     get weight() {
@@ -78,7 +78,7 @@ class NodeLink {
     }
 
     aimsToNode(node) {
-        return node == this.destination;
+        return node == this._to;
     }
 
     get color() {
