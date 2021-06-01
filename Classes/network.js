@@ -1,3 +1,6 @@
+/**
+ * Class able to generate a network of nodes, with conections between them.
+ */
 class Network {
     static ERRORS = {
         NUMBERINPUT: new Error("The input must be a number")
@@ -59,6 +62,10 @@ class Network {
 
 
     // DIJKSTRA
+    /**
+     * Changes the rootNode to the one selected.
+     * @param {Node} newRootNode
+     */
     updateRootNode(newRootNode) {
         if (this.rootNode) {
             this.rootNode.phase = NetworkNode.PHASE.NORMAL;
@@ -67,6 +74,11 @@ class Network {
         this.rootNode.phase = NetworkNode.PHASE.ROOT;
     }
 
+    /**
+     * Iterator to see, step by step, dijkstra's algorithm.
+     * @see this.rootNode
+     * @see this.dijkstraOBJ
+     */
     *dijkstra() {
         if (this.rootNode == undefined) {
             console.warn("Root node not selected.");
@@ -127,34 +139,43 @@ class Network {
 
     // ELEMENTS CREATION
     // NODE
+    /**
+     * Create nodes on the network on random positions.
+     * @param {number} N - Desired number of nodes.
+     * @param {number} R - Minimum distance between 2 nodes.
+     */
     createRandomNodes(N, R) {
-        let MAXATTEMPS = 1000;
+        let MAXATTEMPS = 1000; // Maximum number of atempts to try. If reached, do not continue trying
         let attempt, pos, node, validNode;
         let index = 1;
-        for (let i = 0; i < N; i++) {
+        for (let i = 0; i < N; i++) { // For each desired node
             validNode = false;
             attempt = 0;
-            while (!validNode && attempt++ < MAXATTEMPS) {
+            while (!validNode && attempt++ < MAXATTEMPS) { // While there isn't a valid position to place the node
                 validNode = true;
-                pos = createVector(
+                pos = createVector( // New random position
                     Math.floor(Math.random() * (this.canvasSize.w - this.NODESIZE * 2)) + this.NODESIZE,
                     Math.floor(Math.random() * (this.canvasSize.h - this.NODESIZE * 2)) + this.NODESIZE
                 );
-                node = new NetworkNode(pos, index, this.NODESIZE);
-                for (let otherNode of this.nodes) {
-                    if (node.dist(otherNode) <= R) {
-                        validNode = false;
+                node = new NetworkNode(pos, index, this.NODESIZE); // possible node
+                for (let otherNode of this.nodes) { // For each node already on the network
+                    if (node.dist(otherNode) <= R) {  // If the possible node is too close
+                        validNode = false; // No valid
                         break;
                     }
                 }
             }
-            if (validNode) {
+            if (validNode) { // If valid node, add it to the network
                 this.nodes.add(node);
                 index++;
             }
         }
     }
     // LINK
+    /**
+     * Creates a bidirectional link connection between 2 nodes if they're close.
+     * @param {number} maxDistance - Maximum distance between 2 nodes.
+     */
     createCloseConnections(maxDistance) {
         for (let node of this.nodes) {
             for (let mateNode of this.nodes) {
@@ -170,13 +191,16 @@ class Network {
 
     // NODE MANIPULATION
     /**
-     * Clear the network
+     * Clear the network of all nodes and links.
      */
     clearNetwork() {
         this.nodes.clear();
         this.links.clear();
     }
 
+    /**
+     * Resets the phase and state of the nodes and the links between them.
+     */
     reset() {
         for (let node of this.nodes) {
             node.phase = NetworkNode.PHASE.NORMAL;
@@ -188,7 +212,7 @@ class Network {
 
     // TOOLS
     /**
-     * Creates a p5.Vector with the position given from the center of the screen.
+     * Creates a p5.Vector with the position given from the center of the network.
      * @param {int} x horizontal position from center
      * @param {int} y vertical position from center
      * @returns p5.Vector with the desired coordinates
