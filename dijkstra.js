@@ -29,6 +29,18 @@ function* dijkstra(network, rootNodeID) {
 
     while (pq.size > 0) {
         let v = pq.pop();
+
+        for (let l of v.links) {
+            let f = l.from(), t = l.to(); // Nodes
+            
+            if (dijkstraOBJ.dist[t.id] > dijkstraOBJ.dist[f.id] + l.weight()) {
+                dijkstraOBJ.dist[t.id] = dijkstraOBJ.dist[f.id] + l.weight();
+                dijkstraOBJ.edgeTo[t.id] = l;
+
+                if (pq.contains(t)) pq.decreaseKey(t, dijkstraOBJ.distTo[t]);
+                else                pq.insert(t, dijkstraOBJ.distTo[t]);
+            }
+        }
     }
 }
 // function* dijkstra(rootNode) {
