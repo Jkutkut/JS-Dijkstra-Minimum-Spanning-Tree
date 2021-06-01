@@ -27,18 +27,22 @@ function* dijkstra(network, rootNodeID) {
     let pq = new FlatQueue();
     pq.push(rootNode, dijkstraOBJ.dist[rootNodeID]);
 
-    while (pq.size > 0) {
+    while (pq.length > 0) {
         let v = pq.pop();
+        yield v;
 
         for (let l of v.links) {
-            let f = l.from(), t = l.to(); // Nodes
+            yield l;
+            let f = l.from, t = l.to; // Nodes
             
-            if (dijkstraOBJ.dist[t.id] > dijkstraOBJ.dist[f.id] + l.weight()) {
-                dijkstraOBJ.dist[t.id] = dijkstraOBJ.dist[f.id] + l.weight();
+            if (dijkstraOBJ.dist[t.id] > dijkstraOBJ.dist[f.id] + l.weight) {
+                dijkstraOBJ.dist[t.id] = dijkstraOBJ.dist[f.id] + l.weight;
                 dijkstraOBJ.edgeTo[t.id] = l;
 
                 if (pq.contains(t)) pq.decreaseKey(t, dijkstraOBJ.distTo[t]);
                 else                pq.insert(t, dijkstraOBJ.distTo[t]);
+                
+                yield pq;
             }
         }
     }
