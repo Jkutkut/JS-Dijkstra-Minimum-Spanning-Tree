@@ -74,7 +74,7 @@ class NodeLink {
     }
 
     get weight() {
-        return this.distancia;
+        return this.cost;
     }
 
     aimsToNode(node) {
