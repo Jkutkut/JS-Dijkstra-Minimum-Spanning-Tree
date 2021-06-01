@@ -28,6 +28,7 @@ class BSTNode {
 class BinarySearchTree {
 	constructor() {
 		this.root = null; // root of a binary seach tree
+        this.size = 0;
 	}
 
 	// function to be implemented
@@ -41,6 +42,7 @@ class BinarySearchTree {
         }
         else { // find the correct position in the tree and add the node
             this.insertNode(this.root, newNode);
+            this.size++;
         }
     }
 
@@ -74,13 +76,14 @@ class BinarySearchTree {
     remove(data) {
         // root is re-initialized with root of a modified tree.
         this.root = this.removeNode(this.root, data);
+        this.size++;
     }
 
     
     /**
      * Method to remove node with a given data. It recur over the tree to find the data and removes it
      */
-    removeNode(node, key) {
+    removeNode(node, nodeToRemove) {
         if(node === null) { // if the root is null then tree is empty
             return null;
         }
