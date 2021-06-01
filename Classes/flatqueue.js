@@ -70,20 +70,6 @@ class FlatQueue {
     }
 
     decreaseKey(id, newValue) {
-        // for (let i = 0; i < this.length; i++) {
-        //     if (this.ids[i] == id) {
-        //         for (let j = i + 1; j < this.length; j++, i++) { // remove the i'th element
-        //             this.ids[i] = this.ids[j];
-        //             this.values[i] = this.values[j];
-        //         }
-        //         // now the last position contains a duplicated element
-        //         this.ids.pop();
-        //         this.values.pop();
-
-        //         this.push(id, newValue); // Add it with the new value
-        //         break;
-        //     }
-        // }
         let parent = function(index) {return Math.floor((index - 1) / 2);}
         for (let i = 0; i < this.length; i++) {
             if (this.ids[i] == id) {
