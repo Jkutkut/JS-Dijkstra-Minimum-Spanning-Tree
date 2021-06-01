@@ -8,12 +8,12 @@ class Network {
 
     constructor(canvasWidth, canvasHeight) {
         this._canvasSize = {w: canvasWidth, h:canvasHeight};
-        this._NODESIZE = Math.floor(canvasWidth / 25);
+        this._NODESIZE = 55;
 
         this._nodes = new Set();
         this._links = new Set();
 
-        this.createRandomNodes(40, 3 * this.NODESIZE);
+        this.createRandomNodes(45, 3 * this.NODESIZE);
         this.createCloseConnections(this.NODESIZE * 5);
 
         this.dijkstraOBJ = {dist: {}, edgeTo: {}};
