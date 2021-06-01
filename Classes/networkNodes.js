@@ -62,10 +62,7 @@ class NetworkNode {
     }
 
 
-
     // GETTERS AND SETTERS
-
-
     // id
     /**
      * Returns the node current ID
@@ -124,6 +121,7 @@ class NetworkNode {
     get phaseName() {
         return NetworkNode.PHASESNAMES[this.phase];
     }
+    
 
     /**
      * Returns the current links comming from the node as a set.
