@@ -89,10 +89,16 @@ class NodeLink {
         this.currentState = newState;
         this.show();
     }
+
     get state() {
         return this.currentState;
     }
+
     get stateName() {
         return NodeLink.STATESNAMES[this.state];
+    }
+
+    toString() {
+        return this.from.id + " -> " + this.to.id;
     }
 }
