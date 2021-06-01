@@ -101,10 +101,6 @@ class Network {
                     
                     this.dijkstraOBJ.dist[t.id] = this.dijkstraOBJ.dist[f.id] + l.weight;
                     this.dijkstraOBJ.edgeTo[t.id] = l;
-    
-                    for (let i = 0; i < pq.length; i++) {
-                        console.log("E" + pq.elements[i].id + " -> " + pq.values[i]);
-                    }
 
                     if (pq.contains(t)) {
                         pq.update(t, this.dijkstraOBJ.dist[t.id]);
