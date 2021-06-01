@@ -1,8 +1,26 @@
 class BSTNode {
-    constructor(data) {
-        this.data = data;
+    constructor(obj, weight) {
+        this.data = {obj: obj, weight: weight};
         this.left = null;
         this.right = null;
+    }
+
+    /**
+     * Compares the current node instance with the one on the input
+     * @param {BSTNode} other node to compare to.
+     * @returns The result of the comparation
+     */
+    compareTo(other) {
+        let cmp = this.data.weight - other.data.weight;
+        if (cmp < 0) {
+            return -1;
+        }
+        else if (cmp == 0) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
     }
 }
 
@@ -16,8 +34,8 @@ class BinarySearchTree {
 	/** 
      * Helper method which creates a new node to be inserted and calls insertNode 
      * */ 
-    insert(data) {
-        var newNode = new BSTNode(data); // Creating a node and initailising with data
+    insert(obj, value) {
+        var newNode = new BSTNode(obj, value); // Creating a node and initailising with data
         if(this.root === null) { // root is null then node will be added to the tree and made root.
             this.root = newNode;
         }
