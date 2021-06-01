@@ -65,6 +65,14 @@ class NodeLink {
         pop();
     }
 
+    get from() {
+        return this.origin;
+    }
+    
+    get to() {
+        return this.destination;
+    }
+
     get weight() {
         return this.distancia;
     }
