@@ -4,5 +4,8 @@ This code allows to visualize [Dijkstra's algorithm](https://en.wikipedia.org/wi
 
 ### [See it now](https://jkutkut.github.io/JS-Minimum-Spanning-Tree/)
 
+## How to use it:
+Just click the desired root node with the mouse. Then, use the space to execute each step of the algorithm.
+
 ## Special mentions:
-Sumit Ghosh: [Implementation of Binary Search Tree in Javascript, geeksforgeeks](https://www.geeksforgeeks.org/implementation-binary-search-tree-javascript/)
+- Priority Queue based on Mourner's code https://github.com/mourner/flatqueue
