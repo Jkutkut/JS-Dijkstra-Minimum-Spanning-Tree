@@ -125,11 +125,12 @@ class NetworkNode {
         return NetworkNode.PHASESNAMES[this.phase];
     }
 
+    /**
+     * Returns the current links comming from the node as a set.
+     */
     get links() {
         return this._links;
     }
-
-
 
     /**
      * Returns the current color of the node based on it's phase property.
@@ -147,10 +148,20 @@ class NetworkNode {
         return this.pos.dist(mateNode.pos);
     }
 
+    /**
+     * Checks if there's a connection to the selected node.
+     * @param {Node} node - Node in consideration.
+     * @returns Whenever there's a conection form the current node to the destination node.
+     */
     connectedToNode(node) {
         return this.nodesConnected.has(node);
     }
 
+    /**
+     * Creates a NodeLink from the current node to the selected one.
+     * @param {Node} destination - Node wanted to connect to.
+     * @returns The link object created.
+     */
     addConnection(destination) {
         if (this.nodesConnected.has(destination)) {
             console.warn("already in");
@@ -167,11 +178,13 @@ class NetworkNode {
     }
 
     // STATIC METHODS
-    static clone(node, nodeClass) {
-        if (!nodeClass.prototype instanceof NetworkNode) {
-            throw new Error("nodeClass must be a NetworkNode class instance");
-        }
-        let newNode = new nodeClass(
+    /**
+     * Creates a copy of the given node.
+     * @param {Node} node - Current node to clone
+     * @returns The new node
+     */
+    static clone(node) {
+        let newNode = new NetworkNode(
             node.pos,
             node.id,
             node.size
