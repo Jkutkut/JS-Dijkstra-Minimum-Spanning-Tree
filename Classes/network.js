@@ -8,7 +8,8 @@ class Network {
         this._NODESIZE = Math.floor(mainCanvasWidth / 25);
 
         this._nodes = new Set();
-        
+        this._links = new Set();
+
         this.createRandomNodes(40, 3 * this.NODESIZE);
         this.createCloseConnections(this.NODESIZE * 5);
 
@@ -42,6 +43,13 @@ class Network {
      */
     get nodes() {
         return this._nodes;
+    }
+
+    /**
+     * @returns the set with all the links of the network.
+     */
+    get links() {
+        return this._links;
     }
 
     // ELEMENTS CREATION
@@ -81,7 +89,7 @@ class Network {
                     continue
                 }
                 if (node.dist(mateNode) <= maxDistance) {
-                    node.addConnection(mateNode)
+                    this.links.add(node.addConnection(mateNode));
                 }
             }
         }

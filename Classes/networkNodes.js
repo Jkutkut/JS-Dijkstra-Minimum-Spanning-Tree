@@ -160,8 +160,10 @@ class NetworkNode {
             console.warn("same node as destination")
             return
         }
-        this.links.add(new NodeLink(this, destination));
+        let link = new NodeLink(this, destination)
+        this.links.add(link);
         this.nodesConnected.add(destination);
+        return link;
     }
 
     // STATIC METHODS
