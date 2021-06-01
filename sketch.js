@@ -1,5 +1,5 @@
 var mainCanvasHeight, mainCanvasWidth;
-var netWork;
+var netWork, djkIterator;
 
 function setup() {
     
@@ -19,7 +19,28 @@ function setup() {
     netWork = new Network(mainCanvasWidth, mainCanvasHeight);
 }
 
-
+function keyPressed(event) {
+    if (event.key == " "){
+        if (!djkIterator) {
+            djkIterator = dijkstra(netWork, 6);
+        }
+        let f = djkIterator.next();
+        let v = f.value;
+        if (v instanceof NetworkNode) {
+            console.log(v.id);
+            v.phase = NetworkNode.PHASE.VALID;
+        }
+        else if (v instanceof FlatQueue) {
+            console.log(v);
+        }
+        else if (v instanceof NodeLink) {
+            console.log(v.toString());
+        }
+        else {
+            console.log(f);
+        }
+    }
+}
 
 function draw() {
     background(color(240));
