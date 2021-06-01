@@ -1,12 +1,24 @@
+/**
+ * This class creates the connection between two nodes. Keep in mind this conection is one directional.
+ */
 class NodeLink {
+    /**
+     * Standar states of the node.
+     */
     static STATES = {
         NORMAL: 0,
         VALID: 1
     }
+    /**
+     * Standar names of the possible states of the link.
+     */
     static STATESNAMES = [
         "NORMAL",
         "VALID"
     ]
+    /**
+     * Colors asociated with each states.
+     */
     static COLORS = {
         NORMAL: [0],
         VALID: [90, 247, 17]
@@ -32,10 +44,13 @@ class NodeLink {
         }
     }
 
+    /**
+     * Represent the link on the canvas
+     */
     show() {
         push();
             fill(...this.color);
-            push()
+            push(); // Create the line on the arrow
                 stroke(...this.color);
                 line(
                     this.from.pos.x - this.lineOffset.start.x,
@@ -43,19 +58,19 @@ class NodeLink {
                     this.to.pos.x + this.lineOffset.end.x,
                     this.to.pos.y + this.lineOffset.end.y
                 )
-            pop()
+            pop();
             translate(this.from.pos.x, this.from.pos.y); //translates to the destination vertex
             push();
                 rotate(this.angle - PI);
                 translate(this.distancia);
-                push();
+                push(); // Text representing the cost of the link
                     fill(0);
                     translate(this.distancia.copy().mult(-0.45).x, 10);
                     rotate(PI * 0.5);
                     text(this.cost, 0, 0)
                 pop();
                 stroke(...this.color);
-                beginShape();
+                beginShape(); // Tip of the arrow
                     vertex(0, 0);
                     vertex(-this.arrowTipSize, this.arrowTipSize * 0.5);
                     vertex(-this.arrowTipSize, -this.arrowTipSize * 0.5);
@@ -65,40 +80,69 @@ class NodeLink {
         pop();
     }
 
+    /**
+     * @returns Node where the link is originated.
+     */
     get from() {
         return this._from;
     }
     
+    /**
+     * @returns Node where the link is aiming at.
+     */
     get to() {
         return this._to;
     }
 
+    /**
+     * @returns Cost or weight of traveling the link.
+     */
     get weight() {
         return this.cost;
     }
 
+    /**
+     * Check if the link aims to the selected node
+     * @param {Node} node Node to chekc
+     * @returns Result of the comparation
+     */
     aimsToNode(node) {
         return node == this._to;
     }
 
+    /**
+     * @returns Current color of the node
+     */
     get color() {
         return NodeLink.COLORS[this.stateName];
     }
 
+    /**
+     * Changes the state of the node to the one selected. Also updates the link on the screen.
+     */
     set state(newState) {
         this.currentState = newState;
         this.show();
     }
 
+    /**
+     * @returns Current state of the link.
+     */
     get state() {
         return this.currentState;
     }
 
+    /**
+     * @returns Current state of the link.
+     */
     get stateName() {
         return NodeLink.STATESNAMES[this.state];
     }
 
+    /**
+     * @returns A simple way to visualize the link as a string.
+     */
     toString() {
-        return this.from.id + " -> " + this.to.id;
+        return this.from.id + " -" + this.cost + "-> " + this.to.id;
     }
 }
