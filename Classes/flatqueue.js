@@ -1,7 +1,7 @@
 /**
- * Code from https://github.com/mourner/flatqueue
+ * Code from https://github.com/mourner/flatqueue and modified
  */
-export default class FlatQueue {
+class FlatQueue {
 
     constructor() {
         this.ids = [];
@@ -67,6 +67,32 @@ export default class FlatQueue {
         }
 
         return top;
+    }
+
+    decreaseKey(id, newValue) {
+        for (let i = 0; i < this.length; i++) {
+            if (this.ids[i] == id) {
+                for (let j = i + 1; j < this.length; j++, i++) { // remove the i'th element
+                    this.ids[i] = this.ids[j];
+                    this.values[i] = this.values[j];
+                }
+                // now the last position contains a duplicated element
+                this.ids.pop();
+                this.values.pop();
+
+                this.push(id, newValue); // Add it with the new value
+                break;
+            }
+        }
+    }
+
+    contains(id) {
+        for (let i of this.ids) {
+            if (i == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     peek() {
