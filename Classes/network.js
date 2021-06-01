@@ -177,6 +177,15 @@ class Network {
         this.links.clear();
     }
 
+    reset() {
+        for (let node of this.nodes) {
+            node.phase = NetworkNode.PHASE.NORMAL;
+        }
+        for (let l of this.links) {
+            l.state = NodeLink.STATES.NORMAL;
+        }
+    }
+
     // TOOLS
     /**
      * Creates a p5.Vector with the position given from the center of the screen.

@@ -21,7 +21,7 @@ function setup() {
 
 function keyPressed(event) {
     if (event.key == " "){
-        if (!djkIterator) {
+        if (djkIterator == undefined) {
             djkIterator = netWork.dijkstra();
         }
         let f = djkIterator.next();
@@ -46,7 +46,11 @@ function mouseClicked() {
 
     for (let node of  netWork.nodes) {
         if (mousePos.dist(node.pos) <= node.sizeHalf) {
+            netWork.reset();
+            djkIterator = undefined;
             netWork.updateRootNode(node);
+
+            draw();
             break;
         }
     }
