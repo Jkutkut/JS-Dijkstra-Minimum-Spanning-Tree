@@ -15,6 +15,9 @@ class Network {
 
     }
 
+    /**
+     * Represent the current network
+     */
     show() {
         for (let node of this.nodes) {
             node.show();
@@ -96,7 +99,13 @@ class Network {
     }
 
     // NODE MANIPULATION
-    
+    /**
+     * Clear the network
+     */
+    clearNetwork() {
+        this.nodes.clear();
+        this.links.clear();
+    }
 
     // TOOLS
     /**
