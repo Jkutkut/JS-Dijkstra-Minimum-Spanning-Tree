@@ -114,6 +114,7 @@ class PQueue {
                 this.pop();
 
                 this.push(obj, newValue);
+                break;
             }
         }
     }
