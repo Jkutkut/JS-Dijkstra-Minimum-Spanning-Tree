@@ -47,9 +47,7 @@ class NetworkNode {
             translate(this.pos);
             fill(...this.color);
             ellipse(0, 0, this.size);
-
             fill(0);
-            
             text(this.id, this.textOffset, this.textOffset, this.sizeHalf, this.sizeHalf)
         pop();
     }

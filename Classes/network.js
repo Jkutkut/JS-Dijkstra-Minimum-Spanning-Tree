@@ -5,7 +5,7 @@ class Network {
 
     constructor(canvasWidth, canvasHeight) {
         this._canvasSize = {w: canvasWidth, h:canvasHeight};
-        this._NODESIZE = Math.floor(mainCanvasWidth / 25);
+        this._NODESIZE = Math.floor(canvasWidth / 25);
 
         this._nodes = new Set();
         this._links = new Set();
@@ -18,7 +18,7 @@ class Network {
     }
 
     /**
-     * Represent the current network
+     * Represent the current network.
      */
     show() {
         for (let node of this.nodes) {
