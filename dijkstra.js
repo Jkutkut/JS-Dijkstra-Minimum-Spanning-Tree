@@ -25,26 +25,40 @@ function* dijkstra(network, rootNodeID) {
     dijkstraOBJ.dist[rootNodeID] = 0;
 
     let pq = new FlatQueue();
-    pq.push(rootNode, dijkstraOBJ.dist[rootNodeID]);
+    // pq.push(rootNode, dijkstraOBJ.dist[rootNodeID]);
 
-    while (pq.length > 0) {
-        let v = pq.pop();
-        yield v;
+    rootNode.phase = NetworkNode.PHASE.VALID;
+    let v = rootNode;
+    yield v;
 
+    while (true) {
         for (let l of v.links) {
-            yield l;
+            // yield l;
             let f = l.from, t = l.to; // Nodes
-            
+            // console.log(dijkstraOBJ.dist[t.id] + " > " + dijkstraOBJ.dist[f.id] + " + " + l.weight)
             if (dijkstraOBJ.dist[t.id] > dijkstraOBJ.dist[f.id] + l.weight) {
                 dijkstraOBJ.dist[t.id] = dijkstraOBJ.dist[f.id] + l.weight;
                 dijkstraOBJ.edgeTo[t.id] = l;
 
-                if (pq.contains(t)) pq.decreaseKey(t, dijkstraOBJ.distTo[t]);
-                else                pq.insert(t, dijkstraOBJ.distTo[t]);
-                
-                yield pq;
+                // console.log("pq contains " + t.id + " -> " + pq.contains(t));
+                if (pq.contains(t)) {
+                    pq.decreaseKey(t, dijkstraOBJ.dist[t.id]);
+                }
+                else {
+                    pq.push(t, dijkstraOBJ.dist[t.id]);
+                    t.phase = NetworkNode.PHASE.SELECTED;
+                }
             }
         }
+
+        if (pq.length == 0) break;
+
+        yield pq;
+
+        v = pq.pop();
+        v.phase = NetworkNode.PHASE.VALID;
+        dijkstraOBJ.edgeTo[v.id].state = NodeLink.STATES.VALID;
+        yield v;
     }
 }
 // function* dijkstra(rootNode) {

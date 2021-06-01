@@ -28,7 +28,6 @@ function keyPressed(event) {
         let v = f.value;
         if (v instanceof NetworkNode) {
             console.log(v.id);
-            v.phase = NetworkNode.PHASE.VALID;
         }
         else if (v instanceof FlatQueue) {
             console.log(v);
