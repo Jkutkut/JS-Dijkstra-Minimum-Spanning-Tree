@@ -13,6 +13,8 @@ class Network {
         this.createRandomNodes(40, 3 * this.NODESIZE);
         this.createCloseConnections(this.NODESIZE * 5);
 
+        this.dijkstraOBJ = {dist: {}, edgeTo: {}};
+        this.rootNode;
     }
 
     /**
@@ -54,6 +56,74 @@ class Network {
     get links() {
         return this._links;
     }
+
+
+    // DIJKSTRA
+    updateRootNode(newRootNode) {
+        if (this.rootNode) {
+            this.rootNode.phase = NetworkNode.PHASE.NORMAL;
+        }
+        this.rootNode = newRootNode;
+        this.rootNode.phase = NetworkNode.PHASE.ROOT;
+    }
+
+    *dijkstra() {
+        if (this.rootNode == undefined) {
+            console.warn("Root node not selected.");
+            return;
+        }
+    
+        if (!this.nodes.has(this.rootNode)) {
+            throw new Error("The rootNode is not on the network");
+        }
+    
+        
+        for (let node of this.nodes) {
+            for (let link of node.links) {
+                if (link.weight < 0) {
+                    throw new Error("The weight of all links must be positive");
+                }
+            }
+            this.dijkstraOBJ.dist[node.id] = Number.POSITIVE_INFINITY;
+            this.dijkstraOBJ.edgeTo[node.id] = undefined;
+        }
+        this.dijkstraOBJ.dist[this.rootNode.id] = 0;
+    
+        let pq = new PQueue();
+
+        let v = this.rootNode;
+    
+        while (true) {
+            console.log(v.links);
+            for (let l of v.links) {
+                let f = l.from, t = l.to; // Nodes
+    
+                if (this.dijkstraOBJ.dist[t.id] > this.dijkstraOBJ.dist[f.id] + l.weight) {
+                    this.dijkstraOBJ.dist[t.id] = this.dijkstraOBJ.dist[f.id] + l.weight;
+                    this.dijkstraOBJ.edgeTo[t.id] = l;
+    
+                    if (pq.contains(t)) {
+                        pq.update(t, this.dijkstraOBJ.dist[t.id]);
+                    }
+                    else {
+                        pq.push(t, this.dijkstraOBJ.dist[t.id]);
+                        t.phase = NetworkNode.PHASE.SELECTED;
+                    }
+                }
+            }
+
+            if (pq.length == 0) break;
+            yield pq;
+    
+            v = pq.pop();
+            v.phase = NetworkNode.PHASE.VALID;
+            this.dijkstraOBJ.edgeTo[v.id].state = NodeLink.STATES.VALID;
+            yield v;
+        }
+    }
+
+
+
 
     // ELEMENTS CREATION
     // NODE

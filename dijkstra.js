@@ -26,7 +26,7 @@ function* dijkstra(network, rootNodeID) {
 
     let pq = new FlatQueue();
 
-    rootNode.phase = NetworkNode.PHASE.VALID;
+    // rootNode.phase = NetworkNode.PHASE.VALID;
     let v = rootNode;
     yield v;
 

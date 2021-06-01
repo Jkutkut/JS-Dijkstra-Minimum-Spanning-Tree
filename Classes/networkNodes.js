@@ -6,12 +6,14 @@ class NetworkNode {
     static PHASE = {
         NORMAL: 0,
         SELECTED: 1,
-        VALID: 2
+        VALID: 2,
+        ROOT: 3
     }
     static PHASESNAMES = [
         "NORMAL",
         "SELECTED",
-        "VALID"
+        "VALID",
+        "ROOT"
     ];
     static COLORS = {
         NORMAL: [54, 235, 255, 180],

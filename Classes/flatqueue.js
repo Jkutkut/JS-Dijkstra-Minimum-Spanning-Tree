@@ -5,7 +5,7 @@
 /**
  * Priority queue using binary heap.
  */
-class FlatQueue {
+class PQueue {
 
     constructor() {
         this.elements = [];
