@@ -1,16 +1,35 @@
-function* dijkstra(network, rootNode) {
+var dijkstraOBJ = {dist: {}, edgeTo: {}};
+function* dijkstra(network, rootNodeID) {
+    let rootNode;
+    for (let node of network.nodes) {
+        if (node.id == rootNodeID) {
+            rootNode = node;
+            break;
+        }
+    }
+
     if (!network.nodes.has(rootNode)) {
         throw new Error("The rootNode is not on the network");
     }
 
+    
     for (let node of network.nodes) {
         for (let link of node.links) {
             if (link.weight < 0) {
                 throw new Error("The weight of all links must be positive");
             }
         }
+        dijkstraOBJ.dist[node.id] = Number.POSITIVE_INFINITY;
+        dijkstraOBJ.edgeTo[node.id] = undefined;
     }
+    dijkstraOBJ.dist[rootNodeID] = 0;
 
+    let pq = new FlatQueue();
+    pq.push(rootNode, dijkstraOBJ.dist[rootNodeID]);
+
+    while (pq.size > 0) {
+        let v = pq.pop();
+    }
 }
 // function* dijkstra(rootNode) {
 //     if (! rootNode instanceof RootNode) {
